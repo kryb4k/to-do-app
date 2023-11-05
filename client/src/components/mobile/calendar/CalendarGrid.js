@@ -6,7 +6,9 @@ import {
   isSameMonth,
   isToday,
   isEqual,
+  isSameDay,
   parse,
+  parseISO,
   startOfToday,
   add,
   eachDayOfInterval,
@@ -15,8 +17,24 @@ import {
   startOfWeek,
   startOfMonth,
 } from "date-fns";
+import Task from "./Task";
 
 const CalendarGrid = () => {
+  const tasks = [
+    {
+      id: 1,
+      name: "Shopping",
+      startDatetime: "2023-11-11T13:00",
+      endDatetime: "2023-11-11T14:30",
+    },
+    {
+      id: 2,
+      name: "House Cleaning",
+      startDatetime: "2023-11-06T13:00",
+      endDatetime: "2023-11-06T14:30",
+    },
+  ];
+
   let today = startOfToday();
   const [selectedDay, setSelectedDay] = useState(today);
   const [showCurrentMonthButton, setShowCurrentMonthButton] = useState(false);
@@ -48,6 +66,11 @@ const CalendarGrid = () => {
     return classes.filter(Boolean).join(" ");
   }
 
+  //Filtering days when tasks are planned
+  let selectedDayTasks = tasks.filter((task) =>
+    isSameDay(parseISO(task.startDatetime), selectedDay)
+  );
+
   return (
     <div>
       <div>
@@ -57,7 +80,7 @@ const CalendarGrid = () => {
           </h1>
           {showCurrentMonthButton && (
             <button
-              className="text-white bg-red-500 p-1 rounded text-xs"
+              className="text-white bg-blue-500 p-1 rounded text-xs"
               onClick={() => {
                 setCurrentMonth(format(today, "MMM-yyyy"));
                 setShowCurrentMonthButton(false);
@@ -103,7 +126,7 @@ const CalendarGrid = () => {
               onClick={() => setSelectedDay(day)}
               className={classNames(
                 isEqual(day, selectedDay) && "text-white",
-                !isEqual(day, selectedDay) && isToday(day) && "text-red-500",
+                !isEqual(day, selectedDay) && isToday(day) && "text-blue-500",
                 !isEqual(day, selectedDay) &&
                   !isToday(day) &&
                   isSameMonth(day, firstDayCurrentMonth) &&
@@ -112,7 +135,7 @@ const CalendarGrid = () => {
                   !isToday(day) &&
                   !isSameMonth(day, firstDayCurrentMonth) &&
                   "text-gray-400",
-                isEqual(day, selectedDay) && isToday(day) && "bg-red-500",
+                isEqual(day, selectedDay) && isToday(day) && "bg-blue-500",
                 isEqual(day, selectedDay) && !isToday(day) && "bg-gray-900",
                 !isEqual(day, selectedDay) && "hover:bg-gray-200",
                 (isEqual(day, selectedDay) || isToday(day)) && "font-semibold",
@@ -122,9 +145,34 @@ const CalendarGrid = () => {
                 {format(day, "d")}
               </time>
             </button>
+            <div className="w-1 h-1 mx-auto mt-1">
+              {tasks.some((meeting) =>
+                isSameDay(parseISO(meeting.startDatetime), day)
+              ) && <div className="w-1 h-1 rounded-full bg-sky-500"></div>}
+            </div>
           </div>
         ))}
       </div>
+      <hr className="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700"></hr>
+      <section>
+        <h2 className="font-semibold text-gray-900">
+          {" "}
+          Schedule for{" "}
+          <time dateTime={format(selectedDay, "yyyy-MM-dd")}>
+            {format(selectedDay, "MMM dd, yyy")}
+          </time>
+        </h2>
+        <ol className="mt-4 space-y-1 text-sm leading-6 text-gray-500">
+          {selectedDayTasks.length > 0 ? (
+            selectedDayTasks.map((task) => (
+              // Add tasks information by props
+              <Task key={task.id} taskDetails={task} />
+            ))
+          ) : (
+            <p>No tasks for today.</p>
+          )}
+        </ol>
+      </section>
     </div>
   );
 };
