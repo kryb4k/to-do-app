@@ -16,7 +16,6 @@ const Form = () => {
 
   const onSubmit = async (data, event) => {
     event.preventDefault();
-    // console.log(data);
     await createTask(data);
   };
 

@@ -9,7 +9,7 @@ const DescriptionInput = ({ label, labelText, register }) => {
       <textarea
         id={label}
         className="resize-none w-full h-36"
-        maxLength={200}
+        maxLength={250}
         {...register(label, { required: false, maxLength: 250 })}></textarea>
     </div>
   );
