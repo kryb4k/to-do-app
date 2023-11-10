@@ -13,7 +13,7 @@ public class Task {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Getter @Setter private Long id;
 
     @Column(name = "taskTitle")
     @Getter @Setter private String taskTitle;
