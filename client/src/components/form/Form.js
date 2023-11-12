@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import Input from "./Input";
 import Select from "./Select";
-import DataInput from "./DataInput";
+import DateInput from "./DateInput";
 import AddButton from "./AddButton";
 import DescriptionInput from "./DescriptionInput";
 import FormTitle from "./FormTitle";
@@ -42,7 +42,7 @@ const Form = () => {
         />
         <Select label="priority" register={register} />
         <div className="w-full block items-center">
-          <DataInput
+          <DateInput
             label="startDateTime"
             labelText="date"
             register={register}

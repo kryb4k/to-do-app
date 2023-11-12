@@ -28,14 +28,16 @@ const TaskDetails = ({ date, priority, description }) => {
         <TaskDescriptionContent descriptionContent={description} />
       )}
       <div className="flex mb-4 text-center">
-        <h3 className="w-1/2 uppercase tracking-wide text-gray-700 text-sm font-semibold mb-2">
+        <h3 className="w-1/2 uppercase tracking-wide text-left text-gray-700 text-sm font-semibold mb-2">
           Priority
           {priorityLevel(priority)}
         </h3>
-        <h3 className="w-1/2 uppercase tracking-wide text-gray-700 font-semibold text-sm mb-2">
-          date
-          <span className="font-semibold text-xs ml-2 uppercase">{date}</span>
-        </h3>
+        {date && (
+          <h3 className="w-1/2 uppercase tracking-wide text-right text-gray-700 font-semibold text-sm mb-2">
+            date
+            <span className="font-semibold text-xs ml-2 uppercase">{date}</span>
+          </h3>
+        )}
       </div>
     </div>
   );

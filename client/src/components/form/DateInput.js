@@ -1,12 +1,13 @@
 import React from "react";
 import { format, subDays } from "date-fns";
 
-const DataInput = ({ label, labelText, register, error }) => {
+const DateInput = ({ label, labelText, register, error }) => {
   const today = new Date();
   const todayFormatted = format(today, "yyyy-MM-dd");
 
   const yesterday = subDays(today, 1);
 
+  const formatDate = (date) => format(date, "yyyy-MM-dd'T'HH:mm:ss'Z'");
   return (
     <div
       className={`w-full border-b ${
@@ -31,6 +32,7 @@ const DataInput = ({ label, labelText, register, error }) => {
               ? "You can't select past date"
               : undefined;
           },
+          setValueAs: (value) => formatDate(new Date(value)),
         })}
         min={todayFormatted}
       />
@@ -41,4 +43,4 @@ const DataInput = ({ label, labelText, register, error }) => {
   );
 };
 
-export default DataInput;
+export default DateInput;
