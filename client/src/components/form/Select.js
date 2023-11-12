@@ -1,6 +1,4 @@
-import React from "react";
-
-const Select = React.forwardRef(({ onChange, label, register }, ref) => (
+const Select = ({ onChange, label, register }) => (
   <div className="w-full block border-b border-cyan-700 py-2">
     <label
       htmlFor={label}
@@ -10,7 +8,6 @@ const Select = React.forwardRef(({ onChange, label, register }, ref) => (
     <select
       id={label}
       className="w-full"
-      ref={ref}
       onChange={onChange}
       {...register("priority")}>
       <option value={1}>LOW</option>
@@ -18,6 +15,6 @@ const Select = React.forwardRef(({ onChange, label, register }, ref) => (
       <option value={3}>HIGH</option>
     </select>
   </div>
-));
+);
 
 export default Select;

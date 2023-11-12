@@ -16,7 +16,11 @@ const Form = () => {
 
   const onSubmit = async (data, event) => {
     event.preventDefault();
-    await createTask(data);
+    try {
+      await createTask(data);
+    } catch (error) {
+      console.error("Error creating task:", error.message);
+    }
   };
 
   return (
@@ -25,7 +29,12 @@ const Form = () => {
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="w-full flex flex-wrap gap-2">
-        <Input label="taskTitle" labelText="title" register={register} />
+        <Input
+          label="taskTitle"
+          labelText="title"
+          register={register}
+          error={errors}
+        />
         <DescriptionInput
           label="taskDescription"
           labelText="description"
@@ -37,8 +46,8 @@ const Form = () => {
             label="startDateTime"
             labelText="date"
             register={register}
+            error={errors}
           />
-          {/* <DataInput label="endDateTime" labelText="from" register={register} /> */}
         </div>
         <AddButton type="submit" name="add" />
       </form>
