@@ -22,7 +22,7 @@ public class Task {
     @Getter @Setter private String taskDescription;
 
     @Column(name = "startDateTime")
-    @Getter @Setter private String startDateTime;
+    @Getter @Setter private Instant startDateTime;
 
 //    @Column(name="endDateTime")
 //    @Getter @Setter private Instant endDateTime;

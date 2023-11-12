@@ -1,8 +1,13 @@
 package todo.list.server.task;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
+
+import java.time.ZoneId;
 import java.util.List;
+import java.time.Instant;
+import java.util.Date;
 
 @CrossOrigin("http://localhost:3000/")
 @RestController
@@ -51,17 +56,13 @@ public class TaskController {
         }
     }
 
-    @PostMapping("/findByDate") //date param
-    public Task findAllTaskByDate(@RequestBody Task task){
-        return null;
+    @GetMapping("/calendar")
+    public List<Task> getTasksForMonth(@RequestParam @DateTimeFormat(pattern = "yyyy-MM") Date month) {
+        Instant startOfMonth = month.toInstant();
+        Instant endOfMonth = startOfMonth.atZone(ZoneId.systemDefault()).plusMonths(1).toInstant();
+
+        return taskRepository.findByStartDateTimeBetween(startOfMonth, endOfMonth);
     }
-
-//    @GetMapping("/byDataRange/}")
-//    public List<Task> getTasksInDataRange(@RequestBody Task task){
-//        return taskRepository.findByStartDateTimeBetween(task.getStartDateTime(), task.getEndDateTime());
-//    }
-
-
 
 
 }
