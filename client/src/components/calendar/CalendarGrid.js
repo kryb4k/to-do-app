@@ -19,6 +19,7 @@ import {
 } from "date-fns";
 import { getAllTasksByMonth } from "../../api/getAllTasksByMonth";
 import Task from "../taskList/Task";
+import { toast } from "react-toastify";
 
 const CalendarGrid = () => {
   let today = startOfToday();
@@ -38,9 +39,15 @@ const CalendarGrid = () => {
   //Fetch data for selected month
   useEffect(() => {
     async function fetchData() {
-      const data = await getAllTasksByMonth(dataParam);
-      setTasks(data);
+      try {
+        const data = await getAllTasksByMonth(dataParam);
+        setTasks(data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        toast.error("Unable to fetch tasks. Please try again.");
+      }
     }
+
     fetchData();
   }, [dataParam]);
 
