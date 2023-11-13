@@ -6,6 +6,7 @@ import AddButton from "./AddButton";
 import DescriptionInput from "./DescriptionInput";
 import FormTitle from "./FormTitle";
 import { createTask } from "../../api/createTask";
+import { toast } from "react-toastify";
 
 const Form = () => {
   const {
@@ -18,8 +19,28 @@ const Form = () => {
     event.target.reset();
     try {
       await createTask(data);
+      toast.success("Task created successfully", {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
     } catch (error) {
       console.error("Error creating task:", error.message);
+      toast.error(error.message, {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
     }
   };
 
