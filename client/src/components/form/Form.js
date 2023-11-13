@@ -15,7 +15,7 @@ const Form = () => {
   } = useForm();
 
   const onSubmit = async (data, event) => {
-    event.preventDefault();
+    event.target.reset();
     try {
       await createTask(data);
     } catch (error) {
@@ -34,19 +34,22 @@ const Form = () => {
           labelText="title"
           register={register}
           error={errors}
+          requiredSymbol={true}
         />
         <DescriptionInput
           label="taskDescription"
           labelText="description"
           register={register}
+          error={errors}
         />
-        <Select label="priority" register={register} />
         <div className="w-full block items-center">
+          <Select label="priority" register={register} />
           <DateInput
             label="startDateTime"
             labelText="date"
             register={register}
             error={errors}
+            requiredSymbol={true}
           />
         </div>
         <AddButton type="submit" name="add" />

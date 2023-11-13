@@ -7,8 +7,8 @@ function App() {
   return (
     <div className="App m-2">
       {/* <Calendar /> */}
-      {/* <Form /> */}
-      <TaskList />
+      <Form />
+      {/* <TaskList /> */}
     </div>
   );
 }

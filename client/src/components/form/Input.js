@@ -1,4 +1,4 @@
-const Input = ({ label, labelText, register, error }) => {
+const Input = ({ label, labelText, register, error, requiredSymbol }) => {
   return (
     <div
       className={`w-full block border-b ${
@@ -6,8 +6,11 @@ const Input = ({ label, labelText, register, error }) => {
       } py-2`}>
       <label
         htmlFor={label}
-        className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+        className={`block uppercase tracking-wide ${
+          error[label] ? "text-red-700" : "text-gray-700"
+        } text-xs font-bold mb-2`}>
         {labelText}
+        {requiredSymbol && <span className="text-red-700">*</span>}
       </label>
       <input
         type="text"

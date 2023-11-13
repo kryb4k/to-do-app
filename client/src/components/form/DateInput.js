@@ -1,13 +1,11 @@
 import React from "react";
 import { format, subDays } from "date-fns";
 
-const DateInput = ({ label, labelText, register, error }) => {
+const DateInput = ({ label, labelText, register, error, requiredSymbol }) => {
   const today = new Date();
   const todayFormatted = format(today, "yyyy-MM-dd");
-
   const yesterday = subDays(today, 1);
 
-  const formatDate = (date) => format(date, "yyyy-MM-dd'T'HH:mm:ss'Z'");
   return (
     <div
       className={`w-full border-b ${
@@ -15,8 +13,11 @@ const DateInput = ({ label, labelText, register, error }) => {
       } py-2`}>
       <label
         htmlFor={label}
-        className="block uppercase tracking-wide text-gray-700 text-xs font-bold m-2">
+        className={`block uppercase tracking-wide ${
+          error[label] ? "text-red-700" : "text-gray-700"
+        } text-xs font-bold mb-2`}>
         {labelText}
+        {requiredSymbol && <span className="text-red-700">*</span>}
       </label>
       <input
         id={label}
@@ -25,6 +26,7 @@ const DateInput = ({ label, labelText, register, error }) => {
           error[label] ? "border-red-700 text-red-700" : ""
         }`}
         {...register(label, {
+          valueAsDate: true,
           required: "This field is required",
           validate: (value) => {
             const selectedDate = new Date(value);
@@ -32,7 +34,6 @@ const DateInput = ({ label, labelText, register, error }) => {
               ? "You can't select past date"
               : undefined;
           },
-          setValueAs: (value) => formatDate(new Date(value)),
         })}
         min={todayFormatted}
       />
