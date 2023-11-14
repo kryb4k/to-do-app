@@ -1,6 +1,7 @@
 package todo.list.server.task;
 
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -41,7 +42,6 @@ public class TaskController {
         existingTask.setTaskTitle(task.getTaskTitle());
         existingTask.setTaskDescription(task.getTaskDescription());
         existingTask.setStartDateTime(task.getStartDateTime());
-//        existingTask.setEndDateTime(task.getEndDateTime());
         existingTask.setPriority(task.getPriority());
         return taskRepository.save(existingTask);
     }
@@ -50,18 +50,15 @@ public class TaskController {
     public String deleteTaskById(@PathVariable Long id){
         try{
             taskRepository.deleteById(id);
-            return "User deleted successfully";
+            return "Task deleted successfully";
         } catch(Exception e){
-            return "User not found";
+            return "Task not found";
         }
     }
 
     @GetMapping("/calendar")
-    public List<Task> getTasksForMonth(@RequestParam @DateTimeFormat(pattern = "yyyy-MM") Date month) {
-        Instant startOfMonth = month.toInstant();
-        Instant endOfMonth = startOfMonth.atZone(ZoneId.systemDefault()).plusMonths(1).toInstant();
-
-        return taskRepository.findByStartDateTimeBetween(startOfMonth, endOfMonth);
+    public List<Task> getTasksForMonth(@RequestParam Instant startDate, @RequestParam Instant endDate) {
+        return taskRepository.findByStartDateTimeBetween(startDate, endDate);
     }
 
 

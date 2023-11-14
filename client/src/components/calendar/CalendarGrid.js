@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { HiChevronLeft, HiChevronRight } from "react-icons/hi";
+import { HiChevronLeft, HiChevronRight } from "react-icons/hi2";
 import {
   format,
   getDay,
@@ -28,7 +28,12 @@ const CalendarGrid = () => {
   const [tasks, setTasks] = useState([]);
   let [currentMonth, setCurrentMonth] = useState(format(today, "MMM-yyyy"));
   let firstDayCurrentMonth = parse(currentMonth, "MMM-yyyy", new Date());
-  const dataParam = format(firstDayCurrentMonth, "yyyy-MM");
+
+  let firstDayNextMonth = add(firstDayCurrentMonth, { months: -1 });
+  let firstDayPrevMonth = add(firstDayCurrentMonth, { months: 1 });
+
+  let startDateParam = format(firstDayNextMonth, "yyyy-MM-dd'T'HH:mm:ss'Z'");
+  let endDateParam = format(firstDayPrevMonth, "yyyy-MM-dd'T'HH:mm:ss'Z'");
 
   // Filling calendar with days
   let days = eachDayOfInterval({
@@ -36,11 +41,11 @@ const CalendarGrid = () => {
     end: endOfWeek(endOfMonth(firstDayCurrentMonth)),
   });
 
-  //Fetch data for selected month
+  // Fetch data for selected month
   useEffect(() => {
     async function fetchData() {
       try {
-        const data = await getAllTasksByMonth(dataParam);
+        const data = await getAllTasksByMonth(startDateParam, endDateParam);
         setTasks(data);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -49,16 +54,14 @@ const CalendarGrid = () => {
     }
 
     fetchData();
-  }, [dataParam]);
+  }, [startDateParam, endDateParam]);
 
-  const previousMonth = () => {
-    let firstDayNextMonth = add(firstDayCurrentMonth, { months: -1 });
-    setCurrentMonth(format(firstDayNextMonth, "MMM-yyyy"));
+  const nextMonth = () => {
+    setCurrentMonth(format(firstDayPrevMonth, "MMM-yyyy"));
     setShowCurrentMonthButton(true);
   };
 
-  const nextMonth = () => {
-    let firstDayNextMonth = add(firstDayCurrentMonth, { months: 1 });
+  const previousMonth = () => {
     setCurrentMonth(format(firstDayNextMonth, "MMM-yyyy"));
     setShowCurrentMonthButton(true);
   };
@@ -69,8 +72,8 @@ const CalendarGrid = () => {
   }
 
   //Filtering days when tasks are planned
-  let selectedDayTasks = tasks.filter((task) =>
-    isSameDay(parseISO(task.startDateTime), selectedDay)
+  let selectedDayTasks = tasks.filter(
+    (task) => isSameDay(parseISO(task.startDateTime), selectedDay) //format task date as selectedDay
   );
 
   return (
@@ -169,6 +172,7 @@ const CalendarGrid = () => {
             selectedDayTasks.map((task) => (
               <Task
                 key={task.id}
+                taskId={task.id}
                 taskTitle={task.taskTitle}
                 isDone={task.isDone}
                 priority={task.priority}
