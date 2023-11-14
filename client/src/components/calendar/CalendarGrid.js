@@ -20,6 +20,7 @@ import {
 import { getAllTasksByMonth } from "../../api/getAllTasksByMonth";
 import Task from "../taskList/Task";
 import { toast } from "react-toastify";
+import { deleteTask } from "../../api/deleteTask";
 
 const CalendarGrid = () => {
   let today = startOfToday();
@@ -42,6 +43,8 @@ const CalendarGrid = () => {
   });
 
   // Fetch data for selected month
+  // check if lenght of tasks is the same as it was
+  //somehow send delete
   useEffect(() => {
     async function fetchData() {
       try {
@@ -75,6 +78,62 @@ const CalendarGrid = () => {
   let selectedDayTasks = tasks.filter(
     (task) => isSameDay(parseISO(task.startDateTime), selectedDay) //format task date as selectedDay
   );
+
+  const handleTaskDelete = async (taskId) => {
+    try {
+      await deleteTask(taskId);
+      const updatedTasks = tasks.filter((task) => task.id !== taskId);
+      setTasks(updatedTasks);
+      toast.success("Task deleted successfully", {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+    } catch (error) {
+      toast.error(error, {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+    }
+  };
+
+  //     const handleEdit = async () => {
+  //       try {
+  //         await updateTaskContent(taskId);
+  //         toast.success("Task deleted successfully", {
+  //           position: "top-center",
+  //           autoClose: 3000,
+  //           hideProgressBar: false,
+  //           closeOnClick: true,
+  //           pauseOnHover: true,
+  //           draggable: true,
+  //           progress: undefined,
+  //           theme: "colored",
+  //         });
+  //       } catch (error) {
+  //         toast.error(error, {
+  //           position: "top-center",
+  //           autoClose: 3000,
+  //           hideProgressBar: false,
+  //           closeOnClick: true,
+  //           pauseOnHover: true,
+  //           draggable: true,
+  //           progress: undefined,
+  //           theme: "colored",
+  //         });
+  //       }
+  //     };
 
   return (
     <div>
@@ -177,6 +236,7 @@ const CalendarGrid = () => {
                 isDone={task.isDone}
                 priority={task.priority}
                 taskDescription={task.taskDescription}
+                onDelete={handleTaskDelete}
               />
             ))
           ) : (

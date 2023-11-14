@@ -17,6 +17,7 @@ const Task = ({
   taskDate,
   priority,
   taskDescription,
+  onDelete,
 }) => {
   const [isDetailsVisible, setIsDetailsVisible] = useState(false);
   const [isUpdating, setIsUpdating] = useState(false);
@@ -25,6 +26,11 @@ const Task = ({
   const handleTaskFinish = () => {
     console.log(isTaskDone);
     setIsTaskDone(!isTaskDone);
+  };
+
+  const handleDeleteClick = () => {
+    // Call the onDelete function with the task ID
+    onDelete(taskId);
   };
 
   const toggleUpdateForm = () => {
@@ -58,59 +64,6 @@ const Task = ({
     }
   };
 
-  const handleDelete = async () => {
-    try {
-      await deleteTask(taskId);
-      toast.success("Task deleted successfully", {
-        position: "top-center",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
-      });
-    } catch (error) {
-      toast.error(error, {
-        position: "top-center",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
-      });
-    }
-  };
-  //Updating task in db
-  //     const handleEdit = async () => {
-  //       try {
-  //         await updateTaskContent(taskId);
-  //         toast.success("Task deleted successfully", {
-  //           position: "top-center",
-  //           autoClose: 3000,
-  //           hideProgressBar: false,
-  //           closeOnClick: true,
-  //           pauseOnHover: true,
-  //           draggable: true,
-  //           progress: undefined,
-  //           theme: "colored",
-  //         });
-  //       } catch (error) {
-  //         toast.error(error, {
-  //           position: "top-center",
-  //           autoClose: 3000,
-  //           hideProgressBar: false,
-  //           closeOnClick: true,
-  //           pauseOnHover: true,
-  //           draggable: true,
-  //           progress: undefined,
-  //           theme: "colored",
-  //         });
-  //       }
-  //     };
   return (
     <div className="mt-1">
       <div className="flex border-b border-cyan-700 m-3 items-center justify-items-center block">
@@ -179,7 +132,7 @@ const Task = ({
             </div>
           </div>
           <div className="block text-right">
-            <button onClick={handleDelete} className="mr-5">
+            <button onClick={handleDeleteClick} className="mr-5">
               <HiOutlineTrash className="w-6 h-6" />
             </button>
             <button onClick={toggleUpdateForm}>
