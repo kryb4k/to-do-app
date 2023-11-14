@@ -21,6 +21,7 @@ const TaskList = () => {
   const taskList = taskData.map((task) => (
     <Task
       key={task.id}
+      taskId={task.id}
       taskTitle={task.taskTitle}
       taskDescription={task.taskDescription}
       priority={task.priority}
