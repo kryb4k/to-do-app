@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import Input from "./Input";
 import Select from "./Select";
 import DateInput from "./DateInput";
-import AddButton from "./AddButton";
+import FormButton from "./FormButton";
 import DescriptionInput from "./DescriptionInput";
 import FormTitle from "./FormTitle";
 import { createTask } from "../../api/createTask";
@@ -73,7 +73,7 @@ const Form = () => {
             requiredSymbol={true}
           />
         </div>
-        <AddButton type="submit" name="add" />
+        <FormButton type="submit" name="add" />
       </form>
     </div>
   );

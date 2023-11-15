@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { HiChevronLeft, HiChevronRight } from "react-icons/hi2";
+import { useTodoContext } from "../../hooks/TodoContext.js";
 import {
   format,
   getDay,
@@ -18,12 +19,13 @@ import {
   startOfMonth,
 } from "date-fns";
 import { getAllTasksByMonth } from "../../api/getAllTasksByMonth";
-import Task from "../taskList/Task";
+import Task from "../taskList/Task.js";
 import { toast } from "react-toastify";
 import { deleteTask } from "../../api/deleteTask";
 import { updateTaskContent } from "../../api/updateTaskContent";
 
 const CalendarGrid = () => {
+  const { state, dispatch } = useTodoContext();
   let today = startOfToday();
   const [selectedDay, setSelectedDay] = useState(today);
   const [showCurrentMonthButton, setShowCurrentMonthButton] = useState(false);
@@ -48,7 +50,8 @@ const CalendarGrid = () => {
     async function fetchData() {
       try {
         const data = await getAllTasksByMonth(startDateParam, endDateParam);
-        setTasks(data);
+        // setTasks(data);
+        dispatch({ type: "SET_TASKS", payload: data });
       } catch (error) {
         console.error("Error fetching data:", error);
         toast.error("Unable to fetch tasks. Please try again.");
@@ -74,15 +77,13 @@ const CalendarGrid = () => {
   }
 
   //Filtering days when tasks are planned
-  let selectedDayTasks = tasks.filter(
+  let selectedDayTasks = state.tasks.filter(
     (task) => isSameDay(parseISO(task.startDateTime), selectedDay) //format task date as selectedDay
   );
 
   const handleTaskDelete = async (taskId) => {
     try {
-      await deleteTask(taskId);
-      const updatedTasks = tasks.filter((task) => task.id !== taskId);
-      setTasks(updatedTasks);
+      await deleteTask(taskId, dispatch);
       toast.success("Task deleted successfully", {
         position: "top-center",
         autoClose: 3000,
@@ -109,25 +110,11 @@ const CalendarGrid = () => {
 
   const handleTaskUpdate = async (updatedTask) => {
     try {
-      await updateTaskContent(updatedTask);
-      const updatedTasks = tasks.map((task) =>
-        task.id === updatedTask.id ? updatedTask : task
-      );
-      setTasks(updatedTasks);
-      // toast.success("Task updated successfully", {
-      //   position: "top-center",
-      //   autoClose: 3000,
-      //   hideProgressBar: false,
-      //   closeOnClick: true,
-      //   pauseOnHover: true,
-      //   draggable: true,
-      //   progress: undefined,
-      //   theme: "colored",
-      // });
+      await updateTaskContent(updatedTask, dispatch);
     } catch (error) {
       toast.error(error, {
         position: "top-center",
-        autoClose: 3000,
+        autoClose: 1500,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
@@ -213,7 +200,7 @@ const CalendarGrid = () => {
               </time>
             </button>
             <div className="w-1 h-1 mx-auto mt-1">
-              {tasks.some((task) =>
+              {state.tasks.some((task) =>
                 isSameDay(parseISO(task.startDateTime), day)
               ) && <div className="w-1 h-1 rounded-full bg-sky-500"></div>}
             </div>

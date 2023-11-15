@@ -1,13 +1,20 @@
 import { API_URL } from "../common/config";
 
-export const updateTaskContent = async (updatedTask) => {
-  const response = await fetch(`${API_URL}/tasks/update/${updatedTask.id}`, {
-    method: "PUT",
-    body: JSON.stringify(updatedTask),
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
+export const updateTaskContent = async (updatedTask, dispatch) => {
+  try {
+    const response = await fetch(`${API_URL}/tasks/update/${updatedTask.id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(updatedTask),
+    });
 
-  return response.json();
+    if (!response.ok) {
+      throw new Error("Failed to update task");
+    }
+    dispatch({ type: "UPDATE_TASK", payload: updatedTask });
+  } catch (error) {
+    throw new Error(`Error updating task: ${error.message}`);
+  }
 };

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { toast } from "react-toastify";
 import {
   HiChevronDown,
   HiChevronLeft,
@@ -7,37 +8,54 @@ import {
   HiCheckCircle,
   HiOutlineCheckCircle,
 } from "react-icons/hi2";
-import { updateTaskContent } from "../../api/updateTaskContent.js";
+import UpdateForm from "./UpdateForm";
 
 const Task = ({ task, onDelete, onUpdate }) => {
   const [isDetailsVisible, setIsDetailsVisible] = useState(false);
   const [isUpdating, setIsUpdating] = useState(false);
-  const [isTaskDone, setIsTaskDone] = useState(false);
   const [newTask, setNewTask] = useState(task);
 
   const handleTaskFinish = () => {
-    //   console.log(isTaskDone);
-    //   setIsTaskDone(!isTaskDone);
-    //   //Later change isTaskDone to this task.isDone value
-
     const updatedTask = { ...newTask, isDone: !newTask.isDone };
     setNewTask(updatedTask);
-    onUpdate(newTask);
+    onUpdate(updatedTask);
+    if (newTask.isDone) {
+      toast.info("Task set as not finished", {
+        position: "top-center",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+    } else {
+      toast.success("Task finshed! Congrats!", {
+        position: "top-center",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+    }
   };
 
   const handleDeleteClick = () => {
     onDelete(task.id);
   };
 
-  const handleTaskUpdate = () => {
-    const updatedTask = { ...task, isDone: !task.isDone };
-
+  const handleTaskUpdate = (updatedTask) => {
+    setNewTask(updatedTask);
     onUpdate(updatedTask);
+    setIsUpdating(false);
   };
-
   const toggleUpdateForm = () => {
     setIsUpdating(!isUpdating);
-    console.log("Task update state:", isUpdating);
+    if (!isDetailsVisible) toggleDetails();
   };
 
   const toggleDetails = () => {
@@ -64,6 +82,7 @@ const Task = ({ task, onDelete, onUpdate }) => {
             high
           </span>
         );
+      default:
     }
   };
 
@@ -82,7 +101,7 @@ const Task = ({ task, onDelete, onUpdate }) => {
             className={`uppercase tracking-wide ${
               newTask.isDone ? `text-grey-200 line-through` : `text-grey-800`
             } text-sm text-left font-bold p-2`}>
-            {newTask.taskTitle}
+            {task.taskTitle}
           </h1>
         </div>
         {/* //ogarnac ikony */}
@@ -99,14 +118,14 @@ const Task = ({ task, onDelete, onUpdate }) => {
       {isDetailsVisible && (
         <div>
           <div className="m-4">
-            {newTask.taskDescription && (
+            {task.taskDescription && (
               <div>
                 <h2 className="uppercase tracking-wide text-gray-700 text-sm font-semibold mb-2">
                   Description
                 </h2>
                 <div className="h-20 overflow-y-auto mt-2 mb-2 p-1">
                   <p className="uppercase tracking-wide text-gray-700 font-medium text-xs mb-2">
-                    {newTask.taskDescription}
+                    {task.taskDescription}
                   </p>
                 </div>
               </div>
@@ -114,13 +133,13 @@ const Task = ({ task, onDelete, onUpdate }) => {
             <div className="flex mb-4 text-center">
               <h3 className="w-1/2 uppercase tracking-wide text-left text-gray-700 text-sm font-semibold mb-2">
                 Priority
-                {priorityLevel(newTask.priority)}
+                {priorityLevel(task.priority)}
               </h3>
-              {newTask.taskDate && (
+              {task.taskDate && (
                 <h3 className="w-1/2 uppercase tracking-wide text-right text-gray-700 font-semibold text-sm mb-2">
                   date
                   <span className="font-semibold text-xs ml-2 uppercase">
-                    {newTask.taskDate}
+                    {task.taskDate}
                   </span>
                 </h3>
               )}
@@ -135,6 +154,14 @@ const Task = ({ task, onDelete, onUpdate }) => {
             </button>
           </div>
         </div>
+      )}
+
+      {isUpdating && (
+        <UpdateForm
+          task={newTask}
+          onUpdate={handleTaskUpdate}
+          onCancel={() => setIsUpdating(false)}
+        />
       )}
     </div>
   );
