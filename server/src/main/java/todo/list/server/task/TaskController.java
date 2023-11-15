@@ -43,8 +43,24 @@ public class TaskController {
         existingTask.setTaskDescription(task.getTaskDescription());
         existingTask.setStartDateTime(task.getStartDateTime());
         existingTask.setPriority(task.getPriority());
+        existingTask.setIsDone(task.getIsDone());
         return taskRepository.save(existingTask);
     }
+
+
+//    java.lang.IllegalArgumentException: The HTTP header line [{: ] does not conform to RFC 7230. The request has been rejected.
+//            at org.apache.coyote.http11.Http11InputBuffer.skipLine(Http11InputBuffer.java:1080) ~[tomcat-embed-core-10.1.15.jar:10.1.15]
+//        at org.apache.coyote.http11.Http11InputBuffer.parseHeader(Http11InputBuffer.java:911) ~[tomcat-embed-core-10.1.15.jar:10.1.15]
+//        at org.apache.coyote.http11.Http11InputBuffer.parseHeaders(Http11InputBuffer.java:591) ~[tomcat-embed-core-10.1.15.jar:10.1.15]
+//        at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:287) ~[tomcat-embed-core-10.1.15.jar:10.1.15]
+//        at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63) ~[tomcat-embed-core-10.1.15.jar:10.1.15]
+//        at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:896) ~[tomcat-embed-core-10.1.15.jar:10.1.15]
+//        at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1744) ~[tomcat-embed-core-10.1.15.jar:10.1.15]
+//        at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52) ~[tomcat-embed-core-10.1.15.jar:10.1.15]
+//        at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191) ~[tomcat-embed-core-10.1.15.jar:10.1.15]
+//        at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659) ~[tomcat-embed-core-10.1.15.jar:10.1.15]
+//        at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61) ~[tomcat-embed-core-10.1.15.jar:10.1.15]
+//        at java.base/java.lang.Thread.run(Thread.java:842) ~[na:na]
 
     @DeleteMapping("/delete/{id}")
     public String deleteTaskById(@PathVariable Long id){

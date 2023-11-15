@@ -7,34 +7,37 @@ import {
   HiCheckCircle,
   HiOutlineCheckCircle,
 } from "react-icons/hi2";
-import { deleteTask } from "../../api/deleteTask";
-import { toast } from "react-toastify";
+import { updateTaskContent } from "../../api/updateTaskContent.js";
 
-const Task = ({
-  taskId,
-  taskTitle,
-  isDone,
-  taskDate,
-  priority,
-  taskDescription,
-  onDelete,
-}) => {
+const Task = ({ task, onDelete, onUpdate }) => {
   const [isDetailsVisible, setIsDetailsVisible] = useState(false);
   const [isUpdating, setIsUpdating] = useState(false);
   const [isTaskDone, setIsTaskDone] = useState(false);
+  const [newTask, setNewTask] = useState(task);
 
   const handleTaskFinish = () => {
-    console.log(isTaskDone);
-    setIsTaskDone(!isTaskDone);
+    //   console.log(isTaskDone);
+    //   setIsTaskDone(!isTaskDone);
+    //   //Later change isTaskDone to this task.isDone value
+
+    const updatedTask = { ...newTask, isDone: !newTask.isDone };
+    setNewTask(updatedTask);
+    onUpdate(newTask);
   };
 
   const handleDeleteClick = () => {
-    // Call the onDelete function with the task ID
-    onDelete(taskId);
+    onDelete(task.id);
+  };
+
+  const handleTaskUpdate = () => {
+    const updatedTask = { ...task, isDone: !task.isDone };
+
+    onUpdate(updatedTask);
   };
 
   const toggleUpdateForm = () => {
     setIsUpdating(!isUpdating);
+    console.log("Task update state:", isUpdating);
   };
 
   const toggleDetails = () => {
@@ -68,26 +71,18 @@ const Task = ({
     <div className="mt-1">
       <div className="flex border-b border-cyan-700 m-3 items-center justify-items-center block">
         <button className="w-1/6 text-center" onClick={handleTaskFinish}>
-          {isTaskDone ? (
-            <HiCheckCircle
-              className={`w-6 h-6 ${
-                isTaskDone ? `text-emerald-600` : `text-grey-600`
-              }`}
-            />
+          {newTask.isDone ? (
+            <HiCheckCircle className="w-6 h-6 text-emerald-600" />
           ) : (
-            <HiOutlineCheckCircle
-              className={`w-6 h-6 ${
-                isTaskDone ? `text-emerald-600` : `text-grey-600`
-              }`}
-            />
+            <HiOutlineCheckCircle className="w-6 h-6 text-grey-600" />
           )}
         </button>
         <div className="w-full ml-1">
           <h1
             className={`uppercase tracking-wide ${
-              isTaskDone ? `text-grey-200 line-through` : `text-grey-800`
+              newTask.isDone ? `text-grey-200 line-through` : `text-grey-800`
             } text-sm text-left font-bold p-2`}>
-            {taskTitle}
+            {newTask.taskTitle}
           </h1>
         </div>
         {/* //ogarnac ikony */}
@@ -104,14 +99,14 @@ const Task = ({
       {isDetailsVisible && (
         <div>
           <div className="m-4">
-            {taskDescription && (
+            {newTask.taskDescription && (
               <div>
                 <h2 className="uppercase tracking-wide text-gray-700 text-sm font-semibold mb-2">
                   Description
                 </h2>
                 <div className="h-20 overflow-y-auto mt-2 mb-2 p-1">
                   <p className="uppercase tracking-wide text-gray-700 font-medium text-xs mb-2">
-                    {taskDescription}
+                    {newTask.taskDescription}
                   </p>
                 </div>
               </div>
@@ -119,13 +114,13 @@ const Task = ({
             <div className="flex mb-4 text-center">
               <h3 className="w-1/2 uppercase tracking-wide text-left text-gray-700 text-sm font-semibold mb-2">
                 Priority
-                {priorityLevel(priority)}
+                {priorityLevel(newTask.priority)}
               </h3>
-              {taskDate && (
+              {newTask.taskDate && (
                 <h3 className="w-1/2 uppercase tracking-wide text-right text-gray-700 font-semibold text-sm mb-2">
                   date
                   <span className="font-semibold text-xs ml-2 uppercase">
-                    {taskDate}
+                    {newTask.taskDate}
                   </span>
                 </h3>
               )}
@@ -138,8 +133,6 @@ const Task = ({
             <button onClick={toggleUpdateForm}>
               <HiOutlinePencilSquare className="w-6 h-6" />
             </button>
-            {/* create form for updating with task details in inputs */}
-            {/* {isUpdating && <Form />}  */}
           </div>
         </div>
       )}

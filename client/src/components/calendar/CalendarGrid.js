@@ -21,6 +21,7 @@ import { getAllTasksByMonth } from "../../api/getAllTasksByMonth";
 import Task from "../taskList/Task";
 import { toast } from "react-toastify";
 import { deleteTask } from "../../api/deleteTask";
+import { updateTaskContent } from "../../api/updateTaskContent";
 
 const CalendarGrid = () => {
   let today = startOfToday();
@@ -43,8 +44,6 @@ const CalendarGrid = () => {
   });
 
   // Fetch data for selected month
-  // check if lenght of tasks is the same as it was
-  //somehow send delete
   useEffect(() => {
     async function fetchData() {
       try {
@@ -108,32 +107,36 @@ const CalendarGrid = () => {
     }
   };
 
-  //     const handleEdit = async () => {
-  //       try {
-  //         await updateTaskContent(taskId);
-  //         toast.success("Task deleted successfully", {
-  //           position: "top-center",
-  //           autoClose: 3000,
-  //           hideProgressBar: false,
-  //           closeOnClick: true,
-  //           pauseOnHover: true,
-  //           draggable: true,
-  //           progress: undefined,
-  //           theme: "colored",
-  //         });
-  //       } catch (error) {
-  //         toast.error(error, {
-  //           position: "top-center",
-  //           autoClose: 3000,
-  //           hideProgressBar: false,
-  //           closeOnClick: true,
-  //           pauseOnHover: true,
-  //           draggable: true,
-  //           progress: undefined,
-  //           theme: "colored",
-  //         });
-  //       }
-  //     };
+  const handleTaskUpdate = async (updatedTask) => {
+    try {
+      await updateTaskContent(updatedTask);
+      const updatedTasks = tasks.map((task) =>
+        task.id === updatedTask.id ? updatedTask : task
+      );
+      setTasks(updatedTasks);
+      // toast.success("Task updated successfully", {
+      //   position: "top-center",
+      //   autoClose: 3000,
+      //   hideProgressBar: false,
+      //   closeOnClick: true,
+      //   pauseOnHover: true,
+      //   draggable: true,
+      //   progress: undefined,
+      //   theme: "colored",
+      // });
+    } catch (error) {
+      toast.error(error, {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+    }
+  };
 
   return (
     <div>
@@ -231,12 +234,9 @@ const CalendarGrid = () => {
             selectedDayTasks.map((task) => (
               <Task
                 key={task.id}
-                taskId={task.id}
-                taskTitle={task.taskTitle}
-                isDone={task.isDone}
-                priority={task.priority}
-                taskDescription={task.taskDescription}
+                task={task}
                 onDelete={handleTaskDelete}
+                onUpdate={handleTaskUpdate}
               />
             ))
           ) : (
