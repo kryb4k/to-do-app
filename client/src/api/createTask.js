@@ -1,14 +1,28 @@
 import { API_URL } from "./../common/config";
 
-export async function createTask(data) {
+export const createTask = async (data, dispatch) => {
   data.isDone = false;
-  const response = await fetch(`${API_URL}/tasks`, {
-    method: "POST",
-    body: JSON.stringify(data),
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
 
-  return response.json();
-}
+  try {
+    const response = await fetch(`${API_URL}/tasks`, {
+      method: "POST",
+      body: JSON.stringify(data),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to create task");
+    }
+
+    const createdTask = await response.json();
+
+    // Dispatch action to add the new task to the state
+    dispatch({ type: "CREATE_TASK", payload: createdTask });
+
+    return createdTask;
+  } catch (error) {
+    throw new Error(`Error creating task: ${error.message}`);
+  }
+};

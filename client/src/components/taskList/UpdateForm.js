@@ -1,4 +1,5 @@
 import { useForm, Controller } from "react-hook-form";
+import { toast } from "react-toastify";
 
 const UpdateForm = ({ task, onUpdate, onCancel }) => {
   const { handleSubmit, control } = useForm({
@@ -8,6 +9,16 @@ const UpdateForm = ({ task, onUpdate, onCancel }) => {
   const onSubmit = (data) => {
     const updatedTask = { ...task, ...data };
     onUpdate(updatedTask);
+    toast.success("Task updated successfully!", {
+      position: "top-center",
+      autoClose: 1000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+    });
   };
 
   return (
