@@ -2,7 +2,7 @@ const Select = ({ onChange, label, register }) => (
   <div className="w-full block border-b border-cyan-700 py-2">
     <label
       htmlFor={label}
-      className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+      className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2 md:text-base">
       {label}
     </label>
     <select

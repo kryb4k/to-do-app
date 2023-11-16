@@ -48,36 +48,38 @@ const Form = () => {
   };
 
   return (
-    <div className="m-3">
-      <FormTitle title="create task" />
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="w-full flex flex-wrap gap-2">
-        <Input
-          label="taskTitle"
-          labelText="title"
-          register={register}
-          error={errors}
-          requiredSymbol={true}
-        />
-        <DescriptionInput
-          label="taskDescription"
-          labelText="description"
-          register={register}
-          error={errors}
-        />
-        <div className="w-full block items-center">
-          <Select label="priority" register={register} />
-          <DateInput
-            label="startDateTime"
-            labelText="date"
+    <div className="p-2">
+      <div className="m-3 md:w-3/6  md:mx-auto">
+        <FormTitle title="create task" />
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="w-full flex flex-wrap gap-2">
+          <Input
+            label="taskTitle"
+            labelText="title"
             register={register}
             error={errors}
             requiredSymbol={true}
           />
-        </div>
-        <FormButton type="submit" name="add" />
-      </form>
+          <DescriptionInput
+            label="taskDescription"
+            labelText="description"
+            register={register}
+            error={errors}
+          />
+          <div className="w-full block items-center">
+            <Select label="priority" register={register} />
+            <DateInput
+              label="startDateTime"
+              labelText="date"
+              register={register}
+              error={errors}
+              requiredSymbol={true}
+            />
+          </div>
+          <FormButton type="submit" name="add" />
+        </form>
+      </div>
     </div>
   );
 };

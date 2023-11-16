@@ -15,7 +15,7 @@ const DateInput = ({ label, labelText, register, error, requiredSymbol }) => {
         htmlFor={label}
         className={`block uppercase tracking-wide ${
           error[label] ? "text-red-700" : "text-gray-700"
-        } text-xs font-bold mb-2`}>
+        } text-xs font-bold mb-2 md:text-base`}>
         {labelText}
         {requiredSymbol && <span className="text-red-700">*</span>}
       </label>

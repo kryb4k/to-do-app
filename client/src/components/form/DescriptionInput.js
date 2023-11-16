@@ -6,7 +6,7 @@ const DescriptionInput = ({ label, labelText, register, error }) => {
       } py-2`}>
       <label
         htmlFor={label}
-        className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+        className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2 md:text-base">
         {labelText}
       </label>
       <textarea
