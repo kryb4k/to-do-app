@@ -1,4 +1,4 @@
-const AddButton = ({ type, name }) => {
+const FormButton = ({ type, name }) => {
   return (
     <button
       type={type}
@@ -8,4 +8,4 @@ const AddButton = ({ type, name }) => {
   );
 };
 
-export default AddButton;
+export default FormButton;

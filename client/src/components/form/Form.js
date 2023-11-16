@@ -2,9 +2,10 @@ import { useForm } from "react-hook-form";
 import Input from "./Input";
 import Select from "./Select";
 import DateInput from "./DateInput";
-import AddButton from "./AddButton";
+import FormButton from "./FormButton";
 import DescriptionInput from "./DescriptionInput";
 import FormTitle from "./FormTitle";
+import { useTodoContext } from "../../hooks/TodoContext.js";
 import { createTask } from "../../api/createTask";
 import { toast } from "react-toastify";
 
@@ -15,10 +16,12 @@ const Form = () => {
     formState: { errors },
   } = useForm();
 
+  const { dispatch } = useTodoContext();
+
   const onSubmit = async (data, event) => {
     event.target.reset();
     try {
-      await createTask(data);
+      await createTask(data, dispatch);
       toast.success("Task created successfully", {
         position: "top-center",
         autoClose: 3000,
@@ -73,7 +76,7 @@ const Form = () => {
             requiredSymbol={true}
           />
         </div>
-        <AddButton type="submit" name="add" />
+        <FormButton type="submit" name="add" />
       </form>
     </div>
   );

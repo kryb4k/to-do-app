@@ -21,7 +21,7 @@ const DateInput = ({ label, labelText, register, error, requiredSymbol }) => {
       </label>
       <input
         id={label}
-        type="date"
+        type="datetime-local"
         className={`w-full ${
           error[label] ? "border-red-700 text-red-700" : ""
         }`}
