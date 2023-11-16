@@ -1,5 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { HiChevronLeft, HiChevronRight } from "react-icons/hi2";
+import {
+  HiChevronLeft,
+  HiChevronRight,
+  HiMiniCircleStack,
+  HiMiniPlusCircle,
+} from "react-icons/hi2";
 import { useTodoContext } from "../../hooks/TodoContext.js";
 import {
   format,
@@ -125,111 +130,124 @@ const CalendarGrid = () => {
 
   return (
     <div>
-      <div>
-        <div className="flex items-center">
-          <h1 className="flex-auto font-semibold text-grey-500">
-            {format(firstDayCurrentMonth, "MMM yyyy")}
-          </h1>
-          {showCurrentMonthButton && (
-            <button
-              className="text-white bg-cyan-700 p-1 rounded text-xs"
-              onClick={() => {
-                setCurrentMonth(format(today, "MMM-yyyy"));
-                setShowCurrentMonthButton(false);
-              }}>
-              Current Month
-            </button>
-          )}
-          <button
-            type="button"
-            onClick={previousMonth}
-            className="-my-1.5 flex flex-none items-center justify-center p-1.5 text-gray-400 hover:text-gray-500">
-            <span className="sr-only">Previous month</span>
-            <HiChevronLeft className="w-5 h-5" aria-hidden="true" />
-          </button>
-          <button
-            onClick={nextMonth}
-            type="button"
-            className="-my-1.5 -mr-1.5 ml-2 flex flex-none items-center justify-center p-1.5 text-gray-400 hover:text-gray-500">
-            <span className="sr-only">Next month</span>
-            <HiChevronRight className="w-5 h-5" aria-hidden="true" />
-          </button>
-        </div>
-      </div>
-      <div className="grid grid-cols-7 mt-10 text-xs leading-6 text-center text-gray-500">
-        <div className="text-red-500">Sun</div>
-        <div>Mon</div>
-        <div>Tues</div>
-        <div>Wed</div>
-        <div>Thurs</div>
-        <div>Fri</div>
-        <div className="text-red-500">Sat</div>
-      </div>
-      <div className="grid grid-cols-7 mt-2 text-sm">
-        {days.map((day, index) => (
-          <div
-            key={day.toString()}
-            className={classNames(
-              index === 0 && `col-start-${getDay(day)}`,
-              "py-1.5"
-            )}>
+      <div className="md:inline-flex md:justify-center md:w-full md:h-screen md:gap-4 md:p-2">
+        <div className="md:flex-col md:w-1/2 md:border-r md:border-grey-700 pr-3">
+          <div className="flex items-center">
+            <h1 className="flex-auto font-semibold text-grey-500 md:text-lg">
+              {format(firstDayCurrentMonth, "MMM yyyy")}
+            </h1>
+            {showCurrentMonthButton && (
+              <button
+                className="text-white bg-cyan-700 p-2 rounded text-sm md:p-2 md:font-semibold md:text-lg mr-3"
+                onClick={() => {
+                  setCurrentMonth(format(today, "MMM-yyyy"));
+                  setShowCurrentMonthButton(false);
+                }}>
+                Current Month
+              </button>
+            )}
             <button
               type="button"
-              onClick={() => setSelectedDay(day)}
-              className={classNames(
-                isEqual(day, selectedDay) && "text-white",
-                !isEqual(day, selectedDay) && isToday(day) && "text-cyan-700",
-                !isEqual(day, selectedDay) &&
-                  !isToday(day) &&
-                  isSameMonth(day, firstDayCurrentMonth) &&
-                  "text-gray-900",
-                !isEqual(day, selectedDay) &&
-                  !isToday(day) &&
-                  !isSameMonth(day, firstDayCurrentMonth) &&
-                  "text-gray-400",
-                isEqual(day, selectedDay) && isToday(day) && "bg-cyan-700",
-                isEqual(day, selectedDay) && !isToday(day) && "bg-gray-900",
-                !isEqual(day, selectedDay) && "hover:bg-gray-200",
-                (isEqual(day, selectedDay) || isToday(day)) && "font-semibold",
-                "mx-auto flex h-8 w-8 items-center justify-center rounded-full"
-              )}>
-              <time dateTime={format(day, "yyyy-MM-dd")}>
-                {format(day, "d")}
-              </time>
+              onClick={previousMonth}
+              className="-my-1.5 flex flex-none items-center justify-center p-1.5 text-gray-400 hover:text-gray-500">
+              <span className="sr-only">Previous month</span>
+              <HiChevronLeft className="w-5 h-5" aria-hidden="true" />
             </button>
-            {/* Dots under day with task */}
-            <div className="w-1 h-1 mx-auto mt-1">
-              {state.tasks.some((task) =>
-                isSameDay(parseISO(task.startDateTime), day)
-              ) && <div className="w-1 h-1 rounded-full bg-cyan-600"></div>}
-            </div>
+            <button
+              onClick={nextMonth}
+              type="button"
+              className="-my-1.5 -mr-1.5 ml-2 flex flex-none items-center justify-center p-1.5 text-gray-400 hover:text-gray-500 ">
+              <span className="sr-only">Next month</span>
+              <HiChevronRight className="w-5 h-5" aria-hidden="true" />
+            </button>
           </div>
-        ))}
+          <div className="grid grid-cols-7 mt-10 text-xs leading-6 text-center text-gray-500 md:text-base">
+            <div className="text-red-500">Sun</div>
+            <div>Mon</div>
+            <div>Tues</div>
+            <div>Wed</div>
+            <div>Thurs</div>
+            <div>Fri</div>
+            <div className="text-red-500">Sat</div>
+          </div>
+          <div className="grid grid-cols-7 mt-2 text-sm">
+            {days.map((day, index) => (
+              <div
+                key={day.toString()}
+                className={classNames(
+                  index === 0 && `col-start-${getDay(day)}`,
+                  "py-1.5 "
+                )}>
+                <button
+                  type="button"
+                  onClick={() => setSelectedDay(day)}
+                  className={classNames(
+                    isEqual(day, selectedDay) && "text-white",
+                    !isEqual(day, selectedDay) &&
+                      isToday(day) &&
+                      "text-cyan-700",
+                    !isEqual(day, selectedDay) &&
+                      !isToday(day) &&
+                      isSameMonth(day, firstDayCurrentMonth) &&
+                      "text-gray-900",
+                    !isEqual(day, selectedDay) &&
+                      !isToday(day) &&
+                      !isSameMonth(day, firstDayCurrentMonth) &&
+                      "text-gray-400",
+                    isEqual(day, selectedDay) && isToday(day) && "bg-cyan-700",
+                    isEqual(day, selectedDay) && !isToday(day) && "bg-gray-900",
+                    !isEqual(day, selectedDay) && "hover:bg-gray-200",
+                    (isEqual(day, selectedDay) || isToday(day)) &&
+                      "font-semibold",
+                    "mx-auto flex h-8 w-8 items-center justify-center rounded-full md:text-base"
+                  )}>
+                  <time dateTime={format(day, "yyyy-MM-dd")}>
+                    {format(day, "d")}
+                  </time>
+                </button>
+                {/* Dots under day with task */}
+                <div className="w-1 h-1 mx-auto mt-1">
+                  {state.tasks.some((task) =>
+                    isSameDay(parseISO(task.startDateTime), day)
+                  ) && <div className="w-1 h-1 rounded-full bg-cyan-600"></div>}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+        <hr className="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700"></hr>
+        <div className="md:w-1/2">
+          <section>
+            <h2 className="font-semibold text-gray-900 md:text-lg">
+              {" "}
+              Schedule for{" "}
+              <time dateTime={format(selectedDay, "yyyy-MM-dd")}>
+                {format(selectedDay, "MMM dd, yyy")}
+              </time>
+            </h2>
+            <ol className="mt-4 space-y-1 text-sm leading-6 text-gray-500">
+              {selectedDayTasks.length > 0 ? (
+                selectedDayTasks.map((task) => (
+                  <Task
+                    key={task.id}
+                    task={task}
+                    onDelete={handleTaskDelete}
+                    onUpdate={handleTaskUpdate}
+                  />
+                ))
+              ) : (
+                <div className="flex justify-between text-centeri tems-center">
+                  <p className="text-sm md:text-base">No tasks for today.</p>
+                  {/* todo: implement button for adding task in popup for date */}
+                  <button>
+                    <HiMiniPlusCircle className="w-10 h-10 text-right" />
+                  </button>
+                </div>
+              )}
+            </ol>
+          </section>
+        </div>
       </div>
-      <hr className="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700"></hr>
-      <section>
-        <h2 className="font-semibold text-gray-900">
-          {" "}
-          Schedule for{" "}
-          <time dateTime={format(selectedDay, "yyyy-MM-dd")}>
-            {format(selectedDay, "MMM dd, yyy")}
-          </time>
-        </h2>
-        <ol className="mt-4 space-y-1 text-sm leading-6 text-gray-500">
-          {selectedDayTasks.length > 0 ? (
-            selectedDayTasks.map((task) => (
-              <Task
-                key={task.id}
-                task={task}
-                onDelete={handleTaskDelete}
-                onUpdate={handleTaskUpdate}
-              />
-            ))
-          ) : (
-            <p>No tasks for today.</p>
-          )}
-        </ol>
-      </section>
     </div>
   );
 };

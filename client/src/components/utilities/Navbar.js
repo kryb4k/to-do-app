@@ -14,36 +14,36 @@ const Navbar = () => {
         <li className="mb-px mr-1">
           <Link
             to="/"
-            className="bg-white inline-block border-l border-t border-r rounded-t py-2 px-4 text-cyan-700 font-semibold">
-            <HiMiniCalendarDays />
+            className="bg-white inline-block border-l border-t border-r rounded-t py-2 px-4 text-cyan-700 font-semibold text-center">
+            <HiMiniCalendarDays className="md:w-10 md:h-10" />
           </Link>
         </li>
         <li className="mr-1">
           <Link
             to="/summary"
             className="bg-white inline-block border-l border-t border-r rounded-t py-2 px-4 text-cyan-700 font-semibold">
-            <HiChartPie />
+            <HiChartPie className="md:w-10 md:h-10" />
           </Link>
         </li>
         <li className="mr-1">
           <Link
             to="/task-list"
             className="bg-white inline-block border-l border-t border-r rounded-t py-2 px-4 text-cyan-700 font-semibold">
-            <HiListBullet />
+            <HiListBullet className="md:w-10 md:h-10" />
           </Link>
         </li>
         <li className="mr-1">
           <Link
             to="/add-form"
             className="bg-white inline-block border-l border-t border-r rounded-t py-2 px-4 text-cyan-700 font-semibold">
-            <HiMiniPlusCircle />
+            <HiMiniPlusCircle className="md:w-10 md:h-10" />
           </Link>
         </li>
         <li className="mr-1">
           <Link
             to="/"
             className="bg-white inline-block border-l border-t border-r rounded-t py-2 px-4 text-cyan-700 font-semibold">
-            <HiArrowDownCircle />
+            <HiArrowDownCircle className="md:w-10 md:h-10" />
           </Link>
         </li>
       </ul>
