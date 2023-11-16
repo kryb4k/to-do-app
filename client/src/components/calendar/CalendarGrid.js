@@ -19,7 +19,7 @@ import {
   startOfMonth,
 } from "date-fns";
 import { getAllTasksByMonth } from "../../api/getAllTasksByMonth.js";
-import Task from "../taskList/Task.js";
+import Task from "../task/Task.js";
 import { toast } from "react-toastify";
 import { deleteTask } from "../../api/deleteTask.js";
 import { updateTaskContent } from "../../api/updateTaskContent.js";
@@ -197,10 +197,11 @@ const CalendarGrid = () => {
                 {format(day, "d")}
               </time>
             </button>
+            {/* Dots under day with task */}
             <div className="w-1 h-1 mx-auto mt-1">
               {state.tasks.some((task) =>
                 isSameDay(parseISO(task.startDateTime), day)
-              ) && <div className="w-1 h-1 rounded-full bg-sky-500"></div>}
+              ) && <div className="w-1 h-1 rounded-full bg-cyan-600"></div>}
             </div>
           </div>
         ))}
