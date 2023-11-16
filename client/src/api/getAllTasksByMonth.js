@@ -7,6 +7,3 @@ export async function getAllTasksByMonth(startDate, endDate) {
 
   return response.json();
 }
-
-//2023-10-01T00:00:00Z&2023-12-01T00:00:00Z
-//http://localhost:8080/tasks/calendar?startDate=2023-11-11T00:00:00Z&endDate=2023-11-22T00:00:00Z

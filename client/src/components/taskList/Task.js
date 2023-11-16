@@ -9,10 +9,11 @@ import {
   HiOutlineCheckCircle,
 } from "react-icons/hi2";
 import UpdateForm from "./UpdateForm";
+import Modal from "../utilities/Modal";
 
 const Task = ({ task, onDelete, onUpdate }) => {
   const [isDetailsVisible, setIsDetailsVisible] = useState(false);
-  const [isUpdating, setIsUpdating] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [newTask, setNewTask] = useState(task);
 
   const handleTaskFinish = () => {
@@ -51,11 +52,7 @@ const Task = ({ task, onDelete, onUpdate }) => {
   const handleTaskUpdate = (updatedTask) => {
     setNewTask(updatedTask);
     onUpdate(updatedTask);
-    setIsUpdating(false);
-  };
-  const toggleUpdateForm = () => {
-    setIsUpdating(!isUpdating);
-    if (!isDetailsVisible) toggleDetails();
+    closeModal();
   };
 
   const toggleDetails = () => {
@@ -84,6 +81,14 @@ const Task = ({ task, onDelete, onUpdate }) => {
         );
       default:
     }
+  };
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
   };
 
   return (
@@ -149,20 +154,22 @@ const Task = ({ task, onDelete, onUpdate }) => {
             <button onClick={handleDeleteClick} className="mr-5">
               <HiOutlineTrash className="w-6 h-6" />
             </button>
-            <button onClick={toggleUpdateForm}>
+            <button onClick={openModal}>
               <HiOutlinePencilSquare className="w-6 h-6" />
             </button>
           </div>
         </div>
       )}
 
-      {isUpdating && (
+      <Modal isOpen={isModalOpen} onClose={closeModal}>
         <UpdateForm
           task={newTask}
           onUpdate={handleTaskUpdate}
-          onCancel={() => setIsUpdating(false)}
+          onCancel={() => {
+            closeModal();
+          }}
         />
-      )}
+      </Modal>
     </div>
   );
 };

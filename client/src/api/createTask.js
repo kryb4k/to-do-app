@@ -18,7 +18,6 @@ export const createTask = async (data, dispatch) => {
 
     const createdTask = await response.json();
 
-    // Dispatch action to add the new task to the state
     dispatch({ type: "CREATE_TASK", payload: createdTask });
 
     return createdTask;

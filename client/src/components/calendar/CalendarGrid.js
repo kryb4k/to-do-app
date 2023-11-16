@@ -18,18 +18,17 @@ import {
   startOfWeek,
   startOfMonth,
 } from "date-fns";
-import { getAllTasksByMonth } from "../../api/getAllTasksByMonth";
+import { getAllTasksByMonth } from "../../api/getAllTasksByMonth.js";
 import Task from "../taskList/Task.js";
 import { toast } from "react-toastify";
-import { deleteTask } from "../../api/deleteTask";
-import { updateTaskContent } from "../../api/updateTaskContent";
+import { deleteTask } from "../../api/deleteTask.js";
+import { updateTaskContent } from "../../api/updateTaskContent.js";
 
 const CalendarGrid = () => {
   const { state, dispatch } = useTodoContext();
   let today = startOfToday();
   const [selectedDay, setSelectedDay] = useState(today);
   const [showCurrentMonthButton, setShowCurrentMonthButton] = useState(false);
-  const [tasks, setTasks] = useState([]);
   let [currentMonth, setCurrentMonth] = useState(format(today, "MMM-yyyy"));
   let firstDayCurrentMonth = parse(currentMonth, "MMM-yyyy", new Date());
 
@@ -50,7 +49,6 @@ const CalendarGrid = () => {
     async function fetchData() {
       try {
         const data = await getAllTasksByMonth(startDateParam, endDateParam);
-        // setTasks(data);
         dispatch({ type: "SET_TASKS", payload: data });
       } catch (error) {
         console.error("Error fetching data:", error);
