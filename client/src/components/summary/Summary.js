@@ -12,8 +12,6 @@ import {
   addMonths,
   addWeeks,
   parseISO,
-  parse,
-  isEqual,
   subDays,
   subWeeks,
   subMonths,
@@ -36,6 +34,7 @@ const Summary = () => {
   );
   const [chartTitle, setChartTitle] = useState("todays");
 
+  // console.log(endTimeRange);
   const handleClickToday = () => {
     setStartTimeRange(format(startOfDay(today), "yyyy-MM-dd'T'HH:mm:ss'Z'"));
     setEndTimeRange(format(endOfDay(today), "yyyy-MM-dd'T'HH:mm:ss'Z'"));
@@ -54,6 +53,7 @@ const Summary = () => {
     setEndTimeRange(format(endOfMonth(today), "yyyy-MM-dd'T'HH:mm:ss'Z'"));
     setChartTitle("months");
   };
+
   useEffect(() => {
     async function fetchData() {
       try {
@@ -73,16 +73,16 @@ const Summary = () => {
 
     switch (chartName) {
       case "todays":
-        newStartDate = addDays(parseISO(startTimeRange), 1);
-        newEndDate = addDays(parseISO(endDate), 1);
+        newStartDate = addDays(parseISO(startDate), 1);
+        newEndDate = endOfDay(newStartDate);
         break;
       case "weeks":
         newStartDate = addWeeks(parseISO(startDate), 1);
-        newEndDate = addWeeks(parseISO(endDate), 1);
+        newEndDate = endOfWeek(newStartDate);
         break;
       case "months":
         newStartDate = addMonths(parseISO(startDate), 1);
-        newEndDate = addMonths(parseISO(endDate), 1);
+        newEndDate = endOfMonth(newStartDate);
         break;
       default:
     }
@@ -94,19 +94,18 @@ const Summary = () => {
   const previous = (chartName, startDate, endDate) => {
     let newStartDate, newEndDate;
 
-    console.log(startDate, endDate);
     switch (chartName) {
       case "todays":
         newStartDate = subDays(parseISO(startTimeRange), 1);
-        newEndDate = subDays(parseISO(endDate), 1);
+        newEndDate = endOfDay(newStartDate);
         break;
       case "weeks":
         newStartDate = subWeeks(parseISO(startDate), 1);
-        newEndDate = subWeeks(parseISO(endDate), 1);
+        newEndDate = endOfWeek(newStartDate);
         break;
       case "months":
         newStartDate = subMonths(parseISO(startDate), 1);
-        newEndDate = subMonths(parseISO(endDate), 1);
+        newEndDate = endOfMonth(newStartDate);
         break;
       default:
     }
@@ -141,16 +140,14 @@ const Summary = () => {
           <span className="sr-only">Previous month</span>
           <HiChevronLeft className="w-5 h-5" aria-hidden="true" />
         </button>
-
         <h1>
           {chartTitle === "todays"
             ? `${format(parseISO(startTimeRange), "dd MMM yyyy")}`
             : `${format(parseISO(startTimeRange), "dd MMM yyyy")} - ${format(
-                parseISO(endTimeRange),
+                subDays(parseISO(endTimeRange), 1),
                 "dd MMM yyyy"
               )}`}
         </h1>
-
         <button
           onClick={() => next(chartTitle, startTimeRange, endTimeRange)}
           type="button"
@@ -159,7 +156,7 @@ const Summary = () => {
           <HiChevronRight className="w-5 h-5" aria-hidden="true" />
         </button>
       </div>
-      <div>
+      <div className="p-4 w-70 md:flex md:flex-col md:items-center">
         <PieChartComponent chartTitle={chartTitle} />
         <BarChartComponent />
       </div>

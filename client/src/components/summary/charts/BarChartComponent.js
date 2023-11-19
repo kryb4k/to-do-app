@@ -27,23 +27,29 @@ const BarChartComponent = () => {
   const colors = ["#059669", "#ea580c", "#be123c"];
 
   return (
-    <div className="border p-4">
-      <h1 className="uppercase text-gray-700 text-md font-bold mb-2 md:text-2xl">
-        Priority Distribution
-      </h1>
-      <ResponsiveContainer width="100%" height={300}>
-        <BarChart data={data}>
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="priority" />
-          <YAxis />
-          <Tooltip />
-          <Bar dataKey="count" maxBarSize={50}>
-            {data.map((entry, index) => (
-              <Cell key={`cell-${index}`} fill={colors[index]} />
-            ))}
-          </Bar>
-        </BarChart>
-      </ResponsiveContainer>
+    <div className="md:w-1/2">
+      {state.tasks.length ? (
+        <div>
+          <h1 className="uppercase text-gray-700 text-md font-bold mb-2 pl-4 md:text-lg ">
+            Priority Distribution
+          </h1>
+          <ResponsiveContainer width="100%" height={250}>
+            <BarChart data={data}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="priority" />
+              <YAxis />
+              <Tooltip />
+              <Bar dataKey="count" maxBarSize={50}>
+                {data.map((entry, index) => (
+                  <Cell key={`cell-${index}`} fill={colors[index]} />
+                ))}
+              </Bar>
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
+      ) : (
+        <div></div>
+      )}
     </div>
   );
 };
