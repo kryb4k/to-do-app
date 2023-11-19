@@ -24,7 +24,7 @@ const PieChartComponent = ({ chartTitle }) => {
   const colors = ["#0d9488", "#ef4444"];
 
   return (
-    <div className="md:w-1/2">
+    <div className="md:w-full">
       {state.tasks.length ? (
         <div>
           <h1 className="uppercase text-gray-700 text-md font-bold mb-2 md:text-lg">

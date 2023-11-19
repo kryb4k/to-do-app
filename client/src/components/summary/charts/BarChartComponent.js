@@ -27,7 +27,7 @@ const BarChartComponent = () => {
   const colors = ["#059669", "#ea580c", "#be123c"];
 
   return (
-    <div className="md:w-1/2">
+    <div className="md:w-full">
       {state.tasks.length ? (
         <div>
           <h1 className="uppercase text-gray-700 text-md font-bold mb-2 md:text-lg ">
