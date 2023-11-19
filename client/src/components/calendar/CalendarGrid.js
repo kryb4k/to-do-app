@@ -61,7 +61,7 @@ const CalendarGrid = () => {
     }
 
     fetchData();
-  }, [startDateParam, endDateParam]);
+  }, [startDateParam, endDateParam, dispatch]);
 
   const nextMonth = () => {
     setCurrentMonth(format(firstDayPrevMonth, "MMM-yyyy"));

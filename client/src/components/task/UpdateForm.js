@@ -13,6 +13,7 @@ const UpdateForm = ({ task, onUpdate, onCancel }) => {
       data.startDateTime.getTime() + data.startDateTime.getTimezoneOffset(),
       "yyyy-MM-dd'T'HH:mm:ss'Z'"
     );
+    data.priority = parseInt(data.priority);
     const updatedTask = { ...task, ...data };
     onUpdate(updatedTask);
 
