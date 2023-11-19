@@ -24,9 +24,6 @@ public class Task {
     @Column(name = "startDateTime")
     @Getter @Setter private Instant startDateTime;
 
-//    @Column(name="endDateTime")
-//    @Getter @Setter private Instant endDateTime;
-
     @Column(name="priority")
     @Getter @Setter private Integer priority;
 
