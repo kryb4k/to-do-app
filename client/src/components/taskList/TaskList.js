@@ -6,7 +6,6 @@ import { toast } from "react-toastify";
 import { deleteTask } from "../../api/deleteTask";
 import { parseISO, compareAsc, compareDesc } from "date-fns";
 import { updateTaskContent } from "../../api/updateTaskContent";
-import { HiArrowSmallDown, HiArrowSmallUp } from "react-icons/hi2";
 
 const TaskList = () => {
   const { state, dispatch } = useTodoContext();
