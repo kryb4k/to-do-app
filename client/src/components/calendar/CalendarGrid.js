@@ -79,10 +79,15 @@ const CalendarGrid = () => {
   }
 
   //Filtering days when tasks are planned
-  let selectedDayTasks = state.tasks.filter(
-    (task) => isSameDay(parseISO(task.startDateTime), selectedDay) //format task date as selectedDay
-  );
-
+  let selectedDayTasks = state.tasks
+    .filter((task) => isSameDay(parseISO(task.startDateTime), selectedDay))
+    .sort((a, b) => {
+      if (a.isDone === b.isDone) {
+        return b.priority - a.priority;
+      } else {
+        return a.isDone ? 1 : -1;
+      }
+    });
   const handleTaskDelete = async (taskId) => {
     try {
       await deleteTask(taskId, dispatch);
