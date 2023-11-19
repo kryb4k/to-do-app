@@ -79,10 +79,15 @@ const CalendarGrid = () => {
   }
 
   //Filtering days when tasks are planned
-  let selectedDayTasks = state.tasks.filter(
-    (task) => isSameDay(parseISO(task.startDateTime), selectedDay) //format task date as selectedDay
-  );
-
+  let selectedDayTasks = state.tasks
+    .filter((task) => isSameDay(parseISO(task.startDateTime), selectedDay))
+    .sort((a, b) => {
+      if (a.isDone === b.isDone) {
+        return b.priority - a.priority;
+      } else {
+        return a.isDone ? 1 : -1;
+      }
+    });
   const handleTaskDelete = async (taskId) => {
     try {
       await deleteTask(taskId, dispatch);
@@ -132,7 +137,7 @@ const CalendarGrid = () => {
       <div className="md:inline-flex md:justify-center md:w-full md:h-screen md:gap-4 md:p-2">
         <div className="md:flex-col md:w-1/2 md:border-r md:border-grey-700 pr-3">
           <div className="flex items-center">
-            <h1 className="flex-auto font-semibold text-grey-500 md:text-lg">
+            <h1 className="flex-auto font-semibold text-slate-800 md:text-lg">
               {format(firstDayCurrentMonth, "MMM yyyy")}
             </h1>
             {showCurrentMonthButton && (
@@ -217,7 +222,7 @@ const CalendarGrid = () => {
         <hr className="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700"></hr>
         <div className="md:w-1/2">
           <section>
-            <h2 className="font-semibold text-gray-900 md:text-lg">
+            <h2 className="font-semibold text-slate-800 md:text-lg">
               {" "}
               Schedule for{" "}
               <time dateTime={format(selectedDay, "yyyy-MM-dd")}>

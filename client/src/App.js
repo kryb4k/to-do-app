@@ -21,10 +21,6 @@ function App() {
           <Route path="/task-list" element={<TaskList />} />
           <Route path="/summary" element={<Summary />} />
         </Routes>
-        {/* <Calendar /> */}
-        {/* <Form /> */}
-        {/* <TaskList /> */}
-        {/* <UpdateForm /> */}
       </TodoProvider>
     </div>
   );
