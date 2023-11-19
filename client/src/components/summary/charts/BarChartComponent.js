@@ -30,7 +30,7 @@ const BarChartComponent = () => {
     <div className="md:w-1/2">
       {state.tasks.length ? (
         <div>
-          <h1 className="uppercase text-gray-700 text-md font-bold mb-2 pl-4 md:text-lg ">
+          <h1 className="uppercase text-gray-700 text-md font-bold mb-2 md:text-lg ">
             Priority Distribution
           </h1>
           <ResponsiveContainer width="100%" height={250}>
