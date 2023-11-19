@@ -9,7 +9,7 @@ import { useTodoContext } from "../../hooks/TodoContext.js";
 import { createTask } from "../../api/createTask";
 import { toast } from "react-toastify";
 
-const Form = () => {
+const Form = (newDate) => {
   const {
     register,
     handleSubmit,
@@ -74,6 +74,7 @@ const Form = () => {
               labelText="date"
               register={register}
               error={errors}
+              defaultValue={newDate}
               requiredSymbol={true}
             />
           </div>
