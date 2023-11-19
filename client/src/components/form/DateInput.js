@@ -1,7 +1,14 @@
 import React from "react";
 import { format, subDays } from "date-fns";
 
-const DateInput = ({ label, labelText, register, error, requiredSymbol }) => {
+const DateInput = ({
+  label,
+  labelText,
+  register,
+  error,
+  requiredSymbol,
+  defaultValue,
+}) => {
   const today = new Date();
   const todayFormatted = format(today, "yyyy-MM-dd");
   const yesterday = subDays(today, 1);
@@ -35,6 +42,7 @@ const DateInput = ({ label, labelText, register, error, requiredSymbol }) => {
               : undefined;
           },
         })}
+        value={defaultValue.newDate}
         min={todayFormatted}
       />
       {error[label] && (

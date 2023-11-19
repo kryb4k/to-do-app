@@ -27,9 +27,13 @@ import Task from "../task/Task.js";
 import { toast } from "react-toastify";
 import { deleteTask } from "../../api/deleteTask.js";
 import { updateTaskContent } from "../../api/updateTaskContent.js";
+import Modal from "../utilities/Modal";
+import Form from "../form/Form";
 
 const CalendarGrid = () => {
   const { state, dispatch } = useTodoContext();
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
   let today = startOfToday();
   const [selectedDay, setSelectedDay] = useState(today);
   const [showCurrentMonthButton, setShowCurrentMonthButton] = useState(false);
@@ -132,6 +136,14 @@ const CalendarGrid = () => {
     }
   };
 
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
   return (
     <div>
       <div className="md:inline-flex md:justify-center md:w-full md:h-screen md:gap-4 md:p-2">
@@ -209,7 +221,6 @@ const CalendarGrid = () => {
                     {format(day, "d")}
                   </time>
                 </button>
-                {/* Dots under day with task */}
                 <div className="w-1 h-1 mx-auto mt-1">
                   {state.tasks.some((task) =>
                     isSameDay(parseISO(task.startDateTime), day)
@@ -220,15 +231,23 @@ const CalendarGrid = () => {
           </div>
         </div>
         <hr className="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700"></hr>
-        <div className="md:w-1/2">
+        <div className="md:w-1/2 overflow-y-auto pr-4">
           <section>
-            <h2 className="font-semibold text-slate-800 md:text-lg">
-              {" "}
-              Schedule for{" "}
-              <time dateTime={format(selectedDay, "yyyy-MM-dd")}>
-                {format(selectedDay, "MMM dd, yyy")}
-              </time>
-            </h2>
+            <div className="flex justify-between">
+              <h2 className="font-semibold text-slate-800 md:text-lg">
+                {" "}
+                Schedule for{" "}
+                <time dateTime={format(selectedDay, "yyyy-MM-dd")}>
+                  {format(selectedDay, "MMM dd, yyy")}
+                </time>
+              </h2>
+              <button>
+                <HiMiniPlusCircle
+                  onClick={openModal}
+                  className="w-8 h-8 text-right text-slate-800"
+                />
+              </button>
+            </div>
             <ol className="mt-4 space-y-1 text-sm leading-6 text-gray-500">
               {selectedDayTasks.length > 0 ? (
                 selectedDayTasks.map((task) => (
@@ -240,16 +259,15 @@ const CalendarGrid = () => {
                   />
                 ))
               ) : (
-                <div className="flex justify-between text-centeri tems-center">
+                <div className="flex justify-between text-center items-center">
                   <p className="text-sm md:text-base">No tasks for today.</p>
-                  {/* todo: implement button for adding task in popup for date */}
-                  <button>
-                    <HiMiniPlusCircle className="w-10 h-10 text-right" />
-                  </button>
                 </div>
               )}
             </ol>
           </section>
+          <Modal isOpen={isModalOpen} onClose={closeModal}>
+            <Form newDate={format(selectedDay, "yyyy-MM-dd'T'HH:mm:ss")} />
+          </Modal>
         </div>
       </div>
     </div>
