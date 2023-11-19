@@ -1,12 +1,18 @@
-import { format } from "date-fns";
+import { format, parseISO } from "date-fns";
 import { useForm, Controller } from "react-hook-form";
 import { toast } from "react-toastify";
 
 const UpdateForm = ({ task, onUpdate, onCancel }) => {
   const { handleSubmit, control } = useForm({
-    defaultValues: task,
+    defaultValues: {
+      ...task,
+      startDateTime: format(
+        parseISO(task.startDateTime),
+        "yyyy-MM-dd'T'HH:mm:ss"
+      ),
+    },
   });
-  const today = new Date();
+
   const onSubmit = (data) => {
     data.startDateTime = new Date(data.startDateTime);
     data.startDateTime = format(
@@ -14,6 +20,7 @@ const UpdateForm = ({ task, onUpdate, onCancel }) => {
       "yyyy-MM-dd'T'HH:mm:ss'Z'"
     );
     data.priority = parseInt(data.priority);
+
     const updatedTask = { ...task, ...data };
     onUpdate(updatedTask);
 
@@ -94,12 +101,11 @@ const UpdateForm = ({ task, onUpdate, onCancel }) => {
           <label
             htmlFor="newTaskDate"
             className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
-            New Task Date
+            Task Date
           </label>
           <Controller
             name="startDateTime"
             control={control}
-            min={today}
             render={({ field }) => (
               <input
                 {...field}
