@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import {
   HiChevronLeft,
   HiChevronRight,
-  HiMiniCircleStack,
   HiMiniPlusCircle,
 } from "react-icons/hi2";
 import { useTodoContext } from "../../hooks/TodoContext.js";
