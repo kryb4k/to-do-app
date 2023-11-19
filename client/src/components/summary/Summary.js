@@ -34,7 +34,6 @@ const Summary = () => {
   );
   const [chartTitle, setChartTitle] = useState("todays");
 
-  // console.log(endTimeRange);
   const handleClickToday = () => {
     setStartTimeRange(format(startOfDay(today), "yyyy-MM-dd'T'HH:mm:ss'Z'"));
     setEndTimeRange(format(endOfDay(today), "yyyy-MM-dd'T'HH:mm:ss'Z'"));

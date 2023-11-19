@@ -65,7 +65,7 @@ const PieChartComponent = ({ chartTitle }) => {
           </ResponsiveContainer>
         </div>
       ) : (
-        <p className="text-grey-500 font-semibold text-center mt-4">
+        <p className="text-slate-600 font-semibold text-center mt-4">
           No tasks for selected time range.
         </p>
       )}

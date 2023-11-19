@@ -98,13 +98,13 @@ const Task = ({ task, onDelete, onUpdate }) => {
           {newTask.isDone ? (
             <HiCheckCircle className="w-6 h-6 text-emerald-600" />
           ) : (
-            <HiOutlineCheckCircle className="w-6 h-6 text-grey-600" />
+            <HiOutlineCheckCircle className="w-6 h-6 text-slate-800" />
           )}
         </button>
         <div className="w-full ml-1">
           <h1
             className={`uppercase tracking-wide ${
-              newTask.isDone ? `text-grey-200 line-through` : `text-grey-800`
+              newTask.isDone ? `text-slate-400 line-through` : `text-slate-800`
             } text-sm text-left font-bold p-2`}>
             {task.taskTitle}
           </h1>
