@@ -35,6 +35,10 @@ const DateInput = ({
         {...register(label, {
           valueAsDate: true,
           required: "This field is required",
+          pattern: {
+            value: /^\d{4}-\d{2}-\d{2}$/,
+            message: "Invalid date format (YYYY-MM-DD)",
+          },
           validate: (value) => {
             const selectedDate = new Date(value);
             return selectedDate < yesterday

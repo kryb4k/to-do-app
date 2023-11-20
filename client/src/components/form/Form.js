@@ -8,6 +8,7 @@ import FormTitle from "./FormTitle";
 import { useTodoContext } from "../../hooks/TodoContext.js";
 import { createTask } from "../../api/createTask";
 import { toast } from "react-toastify";
+import NotificationCehckbox from "./NotificationCheckbox.js";
 
 const Form = (newDate) => {
   const {
@@ -77,7 +78,20 @@ const Form = (newDate) => {
               defaultValue={newDate}
               requiredSymbol={true}
             />
+            <NotificationCehckbox
+              label="notificationsEnabled"
+              register={register}
+            />
+            <Input
+              label="email"
+              labelText="email"
+              register={register}
+              error={errors}
+              requiredSymbol={true}
+              defValue="karolinarybakservice@gmail.com"
+            />
           </div>
+
           <FormButton type="submit" name="add" />
         </form>
       </div>

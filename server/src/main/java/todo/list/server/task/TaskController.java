@@ -43,6 +43,8 @@ public class TaskController {
         existingTask.setStartDateTime(task.getStartDateTime());
         existingTask.setPriority(task.getPriority());
         existingTask.setIsDone(task.getIsDone());
+        existingTask.setNotificationsEnabled(task.getNotificationsEnabled());
+        existingTask.setEmail(task.getEmail());
         return taskRepository.save(existingTask);
     }
 

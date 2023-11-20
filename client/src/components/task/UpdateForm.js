@@ -3,7 +3,12 @@ import { useForm, Controller } from "react-hook-form";
 import { toast } from "react-toastify";
 
 const UpdateForm = ({ task, onUpdate, onCancel }) => {
-  const { handleSubmit, control } = useForm({
+  const {
+    handleSubmit,
+    control,
+    formState: { errors },
+    register,
+  } = useForm({
     defaultValues: {
       ...task,
       startDateTime: format(
@@ -41,19 +46,41 @@ const UpdateForm = ({ task, onUpdate, onCancel }) => {
         <div className="mb-4 w-full block border-b border-cyan-700">
           <label
             htmlFor="taskTitle"
-            className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
-            Title
+            className={`block uppercase tracking-wide ${
+              errors.taskTitle ? "text-red-700" : "text-gray-700"
+            } text-xs font-bold mb-2 md:text-base`}>
+            Title <span className="text-red-700">*</span>
           </label>
           <Controller
             name="taskTitle"
             control={control}
             render={({ field }) => (
-              <input
-                {...field}
-                type="text"
-                id="taskTitle"
-                className="w-full bordre-none"
-              />
+              <div>
+                <input
+                  {...field}
+                  type="text"
+                  id="taskTitle"
+                  className={`w-full ${
+                    errors.taskTitle ? "border-red-700" : ""
+                  }`}
+                  {...register("taskTitle", {
+                    required: "This field is required",
+                    maxLength: {
+                      value: 150,
+                      message: "Exceeded max length 150 characters",
+                    },
+                    minLength: {
+                      value: 5,
+                      message: "Field must be at least 5 characters",
+                    },
+                  })}
+                />
+                {errors.taskTitle && (
+                  <p className="text-sm text-red-700 mt-1">
+                    {errors.taskTitle.message}
+                  </p>
+                )}
+              </div>
             )}
           />
         </div>
@@ -100,8 +127,10 @@ const UpdateForm = ({ task, onUpdate, onCancel }) => {
         <div className="mb-4 w-full block border-b border-cyan-700">
           <label
             htmlFor="newTaskDate"
-            className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
-            Task Date
+            className={`block uppercase tracking-wide ${
+              errors.startDateTime ? "text-red-700" : "text-gray-700"
+            } text-xs font-bold mb-2 md:text-base`}>
+            Task Date <span className="text-red-700">*</span>
           </label>
           <Controller
             name="startDateTime"
@@ -112,10 +141,53 @@ const UpdateForm = ({ task, onUpdate, onCancel }) => {
                 type="datetime-local"
                 id="startDateTime"
                 className="w-full border-none"
+                {...register("startDateTime", {
+                  required: "This field is required",
+                  pattern: {
+                    value: /^\d{4}-\d{2}-\d{2}$/,
+                    message: "Invalid date format (YYYY-MM-DD)",
+                  },
+                })}
+              />
+            )}
+          />
+          {errors.startDateTime && (
+            <p className="text-sm text-red-700 mt-1">
+              {errors.startDateTime.message}
+            </p>
+          )}
+        </div>
+        <div className="mb-4 w-full block border-b border-cyan-700">
+          <label
+            htmlFor="email"
+            className={`block uppercase tracking-wide ${
+              errors.email ? "text-red-700" : "text-gray-700"
+            } text-xs font-bold mb-2 md:text-base`}>
+            Email <span className="text-red-700">*</span>
+          </label>
+          <Controller
+            name="email"
+            control={control}
+            render={({ field }) => (
+              <input
+                {...field}
+                type="email"
+                id="email"
+                className="w-full bordre-none"
+                {...register("email", {
+                  required: "This field is required",
+                  pattern: {
+                    value: /^\S+@\S+$/i,
+                    message: "Invalid email address",
+                  },
+                })}
               />
             )}
           />
         </div>
+        {errors.email && (
+          <p className="text-sm text-red-700 mt-1">{errors.email.message}</p>
+        )}
 
         <div className="flex gap-3 justify-center">
           <button

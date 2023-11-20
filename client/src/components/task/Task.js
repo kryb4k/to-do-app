@@ -7,6 +7,8 @@ import {
   HiOutlineTrash,
   HiCheckCircle,
   HiOutlineCheckCircle,
+  HiOutlineBell,
+  HiBellAlert,
 } from "react-icons/hi2";
 import UpdateForm from "./UpdateForm";
 import Modal from "../utilities/Modal";
@@ -15,6 +17,38 @@ const Task = ({ task, onDelete, onUpdate }) => {
   const [isDetailsVisible, setIsDetailsVisible] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [newTask, setNewTask] = useState(task);
+
+  const handleTaskNotification = () => {
+    const updatedTask = {
+      ...newTask,
+      notificationsEnabled: !newTask.notificationsEnabled,
+    };
+    setNewTask(updatedTask);
+    onUpdate(updatedTask);
+    if (newTask.notificationsEnabled) {
+      toast.warn("Task notification disabled.", {
+        position: "top-center",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+    } else {
+      toast.success("Task notification enabled.", {
+        position: "top-center",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+    }
+  };
 
   const handleTaskFinish = () => {
     const updatedTask = { ...newTask, isDone: !newTask.isDone };
@@ -151,6 +185,13 @@ const Task = ({ task, onDelete, onUpdate }) => {
             </div>
           </div>
           <div className="block text-right">
+            <button onClick={handleTaskNotification} className="mr-5">
+              {!newTask.notificationsEnabled ? (
+                <HiOutlineBell className="w-6 h-6" />
+              ) : (
+                <HiBellAlert className="w-6 h-6 text-amber-600" />
+              )}
+            </button>
             <button onClick={handleDeleteClick} className="mr-5">
               <HiOutlineTrash className="w-6 h-6" />
             </button>
