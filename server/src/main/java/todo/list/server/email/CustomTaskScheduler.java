@@ -47,8 +47,8 @@ public class CustomTaskScheduler {
         return repository.findAllByStartDateTimeBetweenAndNotificationsEnabled(startInstant, endInstant, notificationsEnabled);
     }
 
-    @Scheduled(fixedDelay = 10000)
-    //    @Scheduled(cron = "0 0 8 * * *", zone = "Europe/Warsaw")
+//    @Scheduled(fixedDelay = 10000)
+        @Scheduled(cron = "0 0 8 * * *", zone = "Europe/Warsaw")
     public void sendPlannedTasksForWholeDay() {
         LocalDateTime startOfDay = LocalDateTime.of(LocalDate.now(), LocalTime.MIN);
         LocalDateTime endOfDay = LocalDateTime.of(LocalDate.now(), LocalTime.MAX);
@@ -67,8 +67,8 @@ public class CustomTaskScheduler {
         }
     }
 
-    @Scheduled(fixedDelay = 10000)
-//    @Scheduled(cron = "0 0 20 * * *", zone = "Europe/Warsaw")
+//    @Scheduled(fixedDelay = 10000)
+    @Scheduled(cron = "0 0 20 * * *", zone = "Europe/Warsaw")
     public void sendDailySummary() {
         LocalDateTime startOfDay = LocalDateTime.of(LocalDate.now(), LocalTime.MIN);
         LocalDateTime endOfDay = LocalDateTime.of(LocalDate.now(), LocalTime.MAX);
