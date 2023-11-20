@@ -162,7 +162,7 @@ const Summary = () => {
           <BarChartComponent />
         </div>
       </div>
-      <div className="hidden border-l md:block md:w-1/2">
+      <div className="hidden border-l md:block md:w-1/2 overflow-y-auto">
         <TaskList />
       </div>
     </div>

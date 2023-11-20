@@ -15,14 +15,14 @@ const Navbar = () => {
     return location.pathname === pathname;
   };
   return (
-    <div>
+    <div className="dark:bg-slate-800 pt-2">
       <ul className="flex justify-center border-b">
         <li className="mb-px mr-1">
           <Link
             to="/"
             className={`${
-              isActive("/") ? "bg-cyan-700 text-white" : ""
-            } inline-block border-l border-t border-r rounded-t py-2 px-4 text-slate-600 font-semibold text-slate-600 text-center`}>
+              isActive("/") ? "bg-cyan-700 text-slate-100" : ""
+            } inline-block border-l border-t border-r rounded-t py-2 px-4 text-slate-600 font-semibold text-center dark:border-slate-200`}>
             <HiMiniCalendarDays className="w-5 h-5 md:w-6 md:h-6" />
           </Link>
         </li>
@@ -30,8 +30,8 @@ const Navbar = () => {
           <Link
             to="/summary"
             className={`${
-              isActive("/summary") ? "bg-cyan-700 text-white" : ""
-            } inline-block border-l border-t border-r rounded-t py-2 px-4 text-slate-600 font-semibold text-slate-600 text-center`}>
+              isActive("/summary") ? "bg-cyan-700 text-slate-100" : ""
+            } inline-block border-l border-t border-r rounded-t py-2 px-4 text-slate-600 font-semibold text-center dark:border-slate-200`}>
             <HiChartPie className="w-5 h-5 md:w-6 md:h-6" />
           </Link>
         </li>
@@ -39,8 +39,8 @@ const Navbar = () => {
           <Link
             to="/task-list"
             className={`${
-              isActive("/task-list") ? "bg-cyan-700 text-white" : ""
-            } inline-block border-l border-t border-r rounded-t py-2 px-4 text-slate-600 font-semibold text-slate-600 text-center`}>
+              isActive("/task-list") ? "bg-cyan-700 text-slate-100" : ""
+            } inline-block border-l border-t border-r rounded-t py-2 px-4 text-slate-600 font-semibold text-center dark:border-slate-200`}>
             <HiListBullet className="w-5 h-5 md:w-6 md:h-6" />
           </Link>
         </li>
@@ -48,8 +48,8 @@ const Navbar = () => {
           <Link
             to="/add-form"
             className={`${
-              isActive("/add-form") ? "bg-cyan-700 text-white" : ""
-            } inline-block border-l border-t border-r rounded-t py-2 px-4 text-slate-600 font-semibold text-slate-600 text-center`}>
+              isActive("/add-form") ? "bg-cyan-700 text-slate-100" : ""
+            } inline-block border-l border-t border-r rounded-t py-2 px-4 text-slate-600 font-semibold text-center dark:border-slate-200`}>
             <HiMiniPlusCircle className="w-5 h-5 md:w-6 md:h-6" />
           </Link>
         </li>
@@ -57,8 +57,8 @@ const Navbar = () => {
           <Link
             to="/"
             className={`${
-              isActive("/") ? "bg-cyan-700 text-white" : ""
-            } inline-block border-l border-t border-r rounded-t py-2 px-4 text-slate-600 font-semibold text-slate-600 text-center`}>
+              isActive("/") ? "bg-cyan-700 text-slate-100" : ""
+            } inline-block border-l border-t border-r rounded-t py-2 px-4 text-slate-600 font-semibold text-center dark:border-slate-200`}>
             <HiArrowDownCircle className="w-5 h-5 md:w-6 md:h-6" />
           </Link>
         </li>

@@ -11,7 +11,7 @@ import Summary from "./components/summary/Summary.js";
 
 function App() {
   return (
-    <div className="App m-2">
+    <div className="App dark:bg-slate-700">
       <TodoProvider>
         <Navbar />
         <ToastContainer transition={Slide} />

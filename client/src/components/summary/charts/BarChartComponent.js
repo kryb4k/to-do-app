@@ -1,4 +1,4 @@
-import React from "react";
+import { useState, useEffect } from "react";
 import {
   BarChart,
   Bar,
@@ -13,6 +13,7 @@ import { useTodoContext } from "../../../hooks/TodoContext";
 
 const BarChartComponent = () => {
   const { state } = useTodoContext();
+  const [strokeDasharray, setStrokeDasharray] = useState("3 3");
 
   const lowPriorityTasks = state.tasks.filter((task) => task.priority === 1);
   const mediumPriorityTasks = state.tasks.filter((task) => task.priority === 2);
@@ -24,6 +25,15 @@ const BarChartComponent = () => {
     { priority: "High", count: highPriorityTasks.length },
   ];
 
+  useEffect(() => {
+    const dynamicValues = calculateDynamicValues();
+    setStrokeDasharray(dynamicValues);
+  }, [state.tasks]); // You might want to adjust the dependencies based on when you want the values to change
+
+  const calculateDynamicValues = () => {
+    const length = state.tasks.length;
+    return `${length} ${length}`;
+  };
   const colors = ["#059669", "#ea580c", "#be123c"];
 
   return (
@@ -35,7 +45,7 @@ const BarChartComponent = () => {
           </h1>
           <ResponsiveContainer width="100%" height={250}>
             <BarChart data={data}>
-              <CartesianGrid strokeDasharray="3 3" />
+              <CartesianGrid strokeDasharray={strokeDasharray} />
               <XAxis dataKey="priority" />
               <YAxis />
               <Tooltip />
