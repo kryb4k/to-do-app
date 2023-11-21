@@ -58,7 +58,7 @@ const UpdateForm = ({ task, onUpdate, onCancel }) => {
                   {...field}
                   type="text"
                   id="taskTitle"
-                  className={`w-full ${
+                  className={`w-full rounded hover:bg-slate-100 ${
                     errors.taskTitle ? "border-red-700" : ""
                   }`}
                   {...register("taskTitle", {
@@ -97,7 +97,7 @@ const UpdateForm = ({ task, onUpdate, onCancel }) => {
                 {...field}
                 id="taskDescription"
                 rows="3"
-                className="w-full border-none resize-none h-36"
+                className="w-full border-none resize-none h-36 rounded hover:bg-slate-100"
                 maxLength={250}
               />
             )}
@@ -114,7 +114,10 @@ const UpdateForm = ({ task, onUpdate, onCancel }) => {
             name="priority"
             control={control}
             render={({ field }) => (
-              <select {...field} id="priority" className="w-full bordre-none">
+              <select
+                {...field}
+                id="priority"
+                className="w-full bordre-none rounded hover:bg-slate-100">
                 <option value={1}>LOW</option>
                 <option value={2}>MEDIUM</option>
                 <option value={3}>HIGH</option>
@@ -138,7 +141,7 @@ const UpdateForm = ({ task, onUpdate, onCancel }) => {
                 {...field}
                 type="datetime-local"
                 id="startDateTime"
-                className="w-full border-none"
+                className="w-full border-none rounded hover:bg-slate-100"
                 {...register("startDateTime", {
                   required: "This field is required",
                 })}
@@ -167,7 +170,7 @@ const UpdateForm = ({ task, onUpdate, onCancel }) => {
                 {...field}
                 type="email"
                 id="email"
-                className="w-full bordre-none"
+                className="w-full bordre-none rounded hover:bg-slate-100"
                 {...register("email", {
                   required: "This field is required",
                   pattern: {
@@ -186,13 +189,13 @@ const UpdateForm = ({ task, onUpdate, onCancel }) => {
         <div className="flex gap-3 justify-center">
           <button
             type="submit"
-            className="w-1/2 bg-cyan-700 py-2 px4 mt-2 border border-cyan-700 rounded text-white font-bold text-sm uppercase hover:bg-cyan-700 hover:text-white">
+            className="w-1/2 bg-cyan-700 py-2 px4 mt-2 border border-cyan-700 rounded text-white font-bold text-sm uppercase hover:bg-white hover:text-cyan-700">
             Save Changes
           </button>
           <button
             type="button"
             onClick={onCancel}
-            className="w-1/3 bg-transparent py-2 px4 mt-2 border border-cyan-700 rounded text-cyan-700 font-bold text-sm uppercase hover:bg-white hover:text-cyan-700">
+            className="w-1/3 bg-transparent py-2 px4 mt-2 border border-cyan-700 rounded text-cyan-700 font-bold text-sm uppercase hover:bg-cyan-700 hover:text-white">
             Cancel
           </button>
         </div>

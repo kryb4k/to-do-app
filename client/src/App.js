@@ -1,6 +1,6 @@
 import "./App.css";
 import Calendar from "./components/calendar/Calendar";
-import Form from "./components/form/Form";
+// import Form from "./components/form/Form";
 import Navbar from "./components/utilities/Navbar.js";
 import { TodoProvider } from "./hooks/TodoContext.js";
 import { Routes, Route } from "react-router-dom";
@@ -17,7 +17,7 @@ function App() {
         <ToastContainer transition={Slide} />
         <Routes>
           <Route path="/" element={<Calendar />} />
-          <Route path="/add-form" element={<Form />} />
+          {/* <Route path="/add-form" element={<Form />} /> */}
           <Route path="/task-list" element={<TaskList />} />
           <Route path="/summary" element={<Summary />} />
         </Routes>

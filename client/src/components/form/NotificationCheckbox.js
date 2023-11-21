@@ -1,10 +1,10 @@
 const NotificationCheckbox = ({ label, register }) => {
   return (
-    <div className="flex justify-start mt-4 gap-2">
+    <div className="block mt-4">
       <input
         type="checkbox"
         id="allow-notification"
-        className="w-4 h-4"
+        className="w-4 h-4 mr-4"
         {...register(label, { required: false })}
       />
       <label

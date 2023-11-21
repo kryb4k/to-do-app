@@ -154,7 +154,7 @@ const CalendarGrid = () => {
             </h1>
             {showCurrentMonthButton && (
               <button
-                className="text-white bg-cyan-700 p-2 rounded text-sm md:p-2 md:font-semibold md:text-lg mr-3"
+                className="text-white bg-cyan-700 border p-2 rounded text-sm md:p-1 md:font-semibold md:text-md mr-3 hover:text-cyan-700 hover:bg-white hover:border-cyan-700"
                 onClick={() => {
                   setCurrentMonth(format(today, "MMM-yyyy"));
                   setShowCurrentMonthButton(false);
@@ -165,19 +165,19 @@ const CalendarGrid = () => {
             <button
               type="button"
               onClick={previousMonth}
-              className="-my-1.5 flex flex-none items-center justify-center p-1.5 text-gray-400 hover:text-gray-500">
+              className="-my-1.5 flex flex-none items-center rounded-full justify-center p-1.5 text-gray-400 hover:text-gray-500 hover:bg-slate-200">
               <span className="sr-only">Previous month</span>
               <HiChevronLeft className="w-5 h-5" aria-hidden="true" />
             </button>
             <button
               onClick={nextMonth}
               type="button"
-              className="-my-1.5 -mr-1.5 ml-2 flex flex-none items-center justify-center p-1.5 text-gray-400 hover:text-gray-500 ">
+              className="-my-1.5 -mr-1.5 ml-2 flex flex-none items-center rounded-full justify-center p-1.5 text-gray-400 hover:text-gray-500 hover:bg-slate-200">
               <span className="sr-only">Next month</span>
               <HiChevronRight className="w-5 h-5" aria-hidden="true" />
             </button>
           </div>
-          <div className="grid grid-cols-7 mt-10 text-xs leading-6 text-center text-gray-500 md:text-base">
+          <div className="grid grid-cols-7 mt-10 text-xs leading-6 text-center text-gray-500 md:text-base border-b">
             <div className="text-red-500">Sun</div>
             <div>Mon</div>
             <div>Tues</div>
@@ -244,7 +244,7 @@ const CalendarGrid = () => {
               <button>
                 <HiMiniPlusCircle
                   onClick={openModal}
-                  className="w-8 h-8 text-right text-slate-800"
+                  className="w-8 h-8 text-right text-slate-800 hover:text-slate-600"
                 />
               </button>
             </div>

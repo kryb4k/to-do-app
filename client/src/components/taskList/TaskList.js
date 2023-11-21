@@ -99,22 +99,22 @@ const TaskList = () => {
       {/* <h1 className="uppercase block text-lg font-bold text-slate-700">
         Task list
       </h1> */}
-      <div className="flex m-2 gap-4">
-        <div className="mb-4 w-1/2">
+      <div className="flex mx-2 mb-2 gap-4">
+        <div className="mb-4 w-1/2 p-2">
           <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2 md:text-base">
             Filter by Priority:
           </label>
           <select
             onChange={(e) => setFilterPriority(parseInt(e.target.value))}
             value={filterPriority || ""}
-            className="w-full">
+            className="w-full hover:bg-slate-200 rounded p-1">
             <option value="">All</option>
             <option value="1">Low</option>
             <option value="2">Medium</option>
             <option value="3">High</option>
           </select>
         </div>
-        <div className="mb-4 w-1/2">
+        <div className="mb-4 w-1/2 p-2">
           <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2 md:text-base">
             Filter by Status:
           </label>
@@ -129,22 +129,22 @@ const TaskList = () => {
               );
             }}
             value={filterIsDone === null ? "" : filterIsDone.toString()}
-            className="w-full">
+            className="w-full hover:bg-slate-200 rounded p-1">
             <option value="">All</option>
             <option value="true">Completed</option>
             <option value="false">Not Completed</option>
           </select>
         </div>
       </div>
-      <div className="mb-4 m-2 flex justify-around">
+      <div className="mb-4 m-2 flex justify-between">
         <button
           onClick={toggleSortOrder}
-          className="border rounded-t py-1 px-2 text-cyan-700 font-semibold text-center">
+          className="border rounded-t py-1 px-2 text-cyan-700 font-semibold text-center hover:bg-cyan-700 hover:text-white">
           {isAscending ? "Sort dates descending" : "Sort dates ascending"}
         </button>
         <button
           onClick={clearFilters}
-          className="border rounded-t py-1 px-2 text-cyan-700 font-semibold text-center">
+          className="border rounded-t py-1 px-2 text-cyan-700 font-semibold text-center hover:bg-cyan-700 hover:text-white">
           Clear Filters
         </button>
       </div>
