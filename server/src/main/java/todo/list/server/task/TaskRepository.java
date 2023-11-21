@@ -10,7 +10,8 @@ import java.util.List;
 public interface TaskRepository extends JpaRepository<Task, Long> {
     List<Task> findByStartDateTimeBetween(Instant after, Instant before);
     List<Task> findAllByStartDateTimeBetweenAndNotificationsEnabled(Instant startDateTime, Instant startDateTime2, Boolean notificationsEnabled);
-    List<Task> findAllByStartDateTimeBetweenAndIsDone(Instant startDateTime, Instant startDateTime2, Boolean isDone);
+    List<Task> findAllByStartDateTimeBetweenAndIsDoneAndNotificationsEnabled(Instant after, Instant before, Boolean isDone, Boolean notificationsEnabled);
+
 //    @Query(value="select * from tasks where") //tu query sql - przeczytac
 //    Void costam();
 }

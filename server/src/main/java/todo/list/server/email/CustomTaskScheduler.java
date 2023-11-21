@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import static java.time.LocalDate.*;
 
 @Configuration
 @EnableScheduling
@@ -41,41 +42,42 @@ public class CustomTaskScheduler {
                 .collect(Collectors.joining("\n"));
     }
 
-    private List<Task> getTasksForTimeRange(LocalDateTime startDateTime, LocalDateTime endDateTime, boolean notificationsEnabled) {
-        Instant startInstant = startDateTime.toInstant(ZoneOffset.UTC);
-        Instant endInstant = endDateTime.toInstant(ZoneOffset.UTC);
-        return repository.findAllByStartDateTimeBetweenAndNotificationsEnabled(startInstant, endInstant, notificationsEnabled);
-    }
-
-//    @Scheduled(fixedDelay = 10000)
-        @Scheduled(cron = "0 0 8 * * *", zone = "Europe/Warsaw")
+//        @Scheduled(fixedDelay = 10000)
+    @Scheduled(cron = "0 0 8 * * *", zone = "Europe/Warsaw")
     public void sendPlannedTasksForWholeDay() {
-        LocalDateTime startOfDay = LocalDateTime.of(LocalDate.now(), LocalTime.MIN);
-        LocalDateTime endOfDay = LocalDateTime.of(LocalDate.now(), LocalTime.MAX);
+        LocalDate currentDate = now();
+        LocalDateTime startOfDay = LocalDateTime.of(currentDate, LocalTime.MIN);
+        LocalDateTime endOfDay = LocalDateTime.of(currentDate, LocalTime.MAX);
+        Instant startOfDayInstant = startOfDay.toInstant(ZoneOffset.UTC);
+        Instant endOfDayInstant = endOfDay.toInstant(ZoneOffset.UTC);
 
-        List<Task> tasks = getTasksForTimeRange(startOfDay, endOfDay, true);
+        List<Task> tasks = repository.findAllByStartDateTimeBetweenAndNotificationsEnabled(startOfDayInstant,endOfDayInstant, true);
 
-        String titlesWithPriority = formatTitlesWithPriority(tasks);
+            String titlesWithPriority = formatTitlesWithPriority(tasks);
+
 
         if (!tasks.isEmpty()) {
             String recipientEmail = tasks.get(0).getEmail();
             EmailDetails details = new EmailDetails();
             details.setRecipient(recipientEmail);
-            details.setSubject("Task planned for " + LocalDate.now());
+            details.setSubject("Task planned for " + currentDate);
             details.setMsgBody("Hello!\n\n" + "Your fresh task list for today: \n" + titlesWithPriority + "\n\nHave fun!");
             emailService.sendSimpleMail(details);
-        }
+            }
     }
 
-//    @Scheduled(fixedDelay = 10000)
+//        @Scheduled(fixedDelay = 10000)
     @Scheduled(cron = "0 0 20 * * *", zone = "Europe/Warsaw")
-    public void sendDailySummary() {
-        LocalDateTime startOfDay = LocalDateTime.of(LocalDate.now(), LocalTime.MIN);
-        LocalDateTime endOfDay = LocalDateTime.of(LocalDate.now(), LocalTime.MAX);
+        public void sendDailySummary() {
+        LocalDate currentDate = now();
+        LocalDateTime startOfDay = LocalDateTime.of(currentDate, LocalTime.MIN);
+        LocalDateTime endOfDay = LocalDateTime.of(currentDate, LocalTime.MAX);
+        Instant startOfDayInstant = startOfDay.toInstant(ZoneOffset.UTC);
+        Instant endOfDayInstant = endOfDay.toInstant(ZoneOffset.UTC);
 
-        List<Task> tasks = getTasksForTimeRange(startOfDay, endOfDay, true);
-        List<Task> tasksDone = getTasksForTimeRange(startOfDay, endOfDay, true);
-        List<Task> tasksNotDone = getTasksForTimeRange(startOfDay, endOfDay, false);
+        List<Task> tasks = repository.findAllByStartDateTimeBetweenAndNotificationsEnabled(startOfDayInstant,endOfDayInstant, true);
+        List<Task> tasksDone = repository.findAllByStartDateTimeBetweenAndNotificationsEnabled(startOfDayInstant, endOfDayInstant, true);
+        List<Task> tasksNotDone = repository.findAllByStartDateTimeBetweenAndNotificationsEnabled(startOfDayInstant, endOfDayInstant, false);
 
         String tasksDoneWithPriority = formatTitlesWithPriority(tasksDone);
         String tasksNotDoneWithPriority = formatTitlesWithPriority(tasksNotDone);
@@ -84,9 +86,31 @@ public class CustomTaskScheduler {
             String recipientEmail = tasks.get(0).getEmail();
             EmailDetails details = new EmailDetails();
             details.setRecipient(recipientEmail);
-            details.setSubject("Daily tasks summary " + LocalDate.now());
-            details.setMsgBody("Good evening! I hope you did well, but let's see..\n\n"
-                    + "Tasks finished:\n" + tasksDoneWithPriority + "\n\nTasks unfinished:\n" + tasksNotDoneWithPriority + "\n\n Good night! See you tomorrow. ;)");
+            details.setSubject("Daily tasks summary " + currentDate);
+            details.setMsgBody("Good evening! I hope you did well, but let's see..\n\n"+ "Tasks finished:\n" + tasksDoneWithPriority + "\n\nTasks unfinished:\n" + tasksNotDoneWithPriority + "\n\n Good night! See you tomorrow. ;)");
+            emailService.sendSimpleMail(details);
+        }
+    }
+
+//    @Scheduled(fixedDelay = 10000)
+    @Scheduled(cron = "0 60 * * * *", zone = "Europe/Warsaw")
+    public void sendTaskCompletionNotification() {
+        LocalDateTime currentDateTime = LocalDateTime.now();
+        LocalDateTime oneHourFromNow = currentDateTime.plusHours(1);
+        Instant currentInstant = currentDateTime.toInstant(ZoneOffset.UTC);
+        Instant oneHourFromNowInstant = oneHourFromNow.toInstant(ZoneOffset.UTC);
+
+        List<Task> tasksToBeCompleted = repository.findAllByStartDateTimeBetweenAndIsDoneAndNotificationsEnabled(currentInstant, oneHourFromNowInstant, false, true);
+
+        String titlesWithPriority = formatTitlesWithPriority(tasksToBeCompleted);
+
+        for (Task task : tasksToBeCompleted) {
+            String recipientEmail = task.getEmail();
+            EmailDetails details = new EmailDetails();
+            details.setRecipient(recipientEmail);
+            details.setSubject("Task Reminder");
+            details.setMsgBody("Hello!\n\n" + "Reminder: Your task \n\n" + titlesWithPriority + "\n\nis scheduled to be completed within the next hour.\n\n" +
+                    "Have a productive hour!");
             emailService.sendSimpleMail(details);
         }
     }

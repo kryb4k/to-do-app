@@ -5,17 +5,7 @@ const NotificationCheckbox = ({ label, register }) => {
         type="checkbox"
         id="allow-notification"
         className="w-4 h-4"
-        {...register(label, {
-          required: "This field is required",
-          maxLength: {
-            value: 150,
-            message: "Exceeded max length 150 characters",
-          },
-          minLength: {
-            value: 5,
-            message: "Field must be at least 5 characters",
-          },
-        })}
+        {...register(label, { required: false })}
       />
       <label
         htmlFor="allow-notification"

@@ -17,13 +17,11 @@ const UpdateForm = ({ task, onUpdate, onCancel }) => {
       ),
     },
   });
+  console.log();
 
   const onSubmit = (data) => {
     data.startDateTime = new Date(data.startDateTime);
-    data.startDateTime = format(
-      data.startDateTime.getTime() + data.startDateTime.getTimezoneOffset(),
-      "yyyy-MM-dd'T'HH:mm:ss'Z'"
-    );
+    data.startDateTime = format(data.startDateTime, "yyyy-MM-dd'T'HH:mm:ssXXX");
     data.priority = parseInt(data.priority);
 
     const updatedTask = { ...task, ...data };
@@ -143,10 +141,6 @@ const UpdateForm = ({ task, onUpdate, onCancel }) => {
                 className="w-full border-none"
                 {...register("startDateTime", {
                   required: "This field is required",
-                  pattern: {
-                    value: /^\d{4}-\d{2}-\d{2}$/,
-                    message: "Invalid date format (YYYY-MM-DD)",
-                  },
                 })}
               />
             )}
