@@ -2,12 +2,13 @@ import { useForm } from "react-hook-form";
 import Input from "./Input";
 import Select from "./Select";
 import DateInput from "./DateInput";
-import FormButton from "./FormButton";
 import DescriptionInput from "./DescriptionInput";
 import FormTitle from "./FormTitle";
 import { useTodoContext } from "../../hooks/TodoContext.js";
 import { createTask } from "../../api/createTask";
 import { toast } from "react-toastify";
+import NotificationCehckbox from "./NotificationCheckbox.js";
+import Email from "./Email";
 
 const Form = (newDate) => {
   const {
@@ -21,6 +22,7 @@ const Form = (newDate) => {
   const onSubmit = async (data, event) => {
     event.target.reset();
     try {
+      console.log("task created");
       await createTask(data, dispatch);
       toast.success("Task created successfully", {
         position: "top-center",
@@ -49,7 +51,7 @@ const Form = (newDate) => {
 
   return (
     <div className="p-2">
-      <div className="m-3 md:w-3/6  md:mx-auto">
+      <div className="m-3 md:w-100 md:p-3  md:mx-auto">
         <FormTitle title="create task" />
         <form
           onSubmit={handleSubmit(onSubmit)}
@@ -78,7 +80,19 @@ const Form = (newDate) => {
               requiredSymbol={true}
             />
           </div>
-          <FormButton type="submit" name="add" />
+          <NotificationCehckbox
+            label="notificationsEnabled"
+            register={register}
+          />
+          <Email
+            label="email"
+            register={register}
+            error={errors}
+            requiredSymbol={true}
+          />
+          <button className="w-full bg-transparent py-2 px4 mt-2 border border-cyan-700 rounded text-cyan-900 font-bold text-m uppercase hover:bg-cyan-700 hover:text-white md:text-lg">
+            Add
+          </button>
         </form>
       </div>
     </div>

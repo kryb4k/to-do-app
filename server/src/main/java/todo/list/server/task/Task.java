@@ -3,11 +3,13 @@ package todo.list.server.task;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import java.time.Instant;
 
 
 @Entity
+@ToString
 @Table(name="tasks")
 public class Task {
 
@@ -30,7 +32,11 @@ public class Task {
     @Column(name="isDone")
     @Getter @Setter private Boolean isDone;
 
-}
+    @Column(name="notificationsEnabled")
+    @Getter @Setter private Boolean notificationsEnabled;
 
-//Data schema: taskTitle, taskDescription, startDateTime, endDateTime, priority, notification(can make it optional but idk)
+    @Column(name="email")
+    @Getter @Setter private String email;
+
+}
 
