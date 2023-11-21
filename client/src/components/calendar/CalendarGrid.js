@@ -21,6 +21,7 @@ import {
   endOfWeek,
   startOfWeek,
   startOfMonth,
+  compareAsc,
 } from "date-fns";
 import { getAllTasksByMonth } from "../../api/getAllTasksByMonth.js";
 import Task from "../task/Task.js";
@@ -83,7 +84,14 @@ const CalendarGrid = () => {
   }
 
   //Filtering days when tasks are planned
-  let selectedDayTasks = state.tasks
+
+  const selectedDayTasks = state.tasks
+    .slice()
+    .sort((a, b) => {
+      const dateA = parseISO(a.startDateTime);
+      const dateB = parseISO(b.startDateTime);
+      return compareAsc(dateA, dateB);
+    })
     .filter((task) => isSameDay(parseISO(task.startDateTime), selectedDay))
     .sort((a, b) => {
       if (a.isDone === b.isDone) {
@@ -92,6 +100,7 @@ const CalendarGrid = () => {
         return a.isDone ? 1 : -1;
       }
     });
+
   const handleTaskDelete = async (taskId) => {
     try {
       await deleteTask(taskId, dispatch);

@@ -96,9 +96,6 @@ const TaskList = () => {
 
   return (
     <div>
-      {/* <h1 className="uppercase block text-lg font-bold text-slate-700">
-        Task list
-      </h1> */}
       <div className="flex mx-2 mb-2 gap-4">
         <div className="mb-4 w-1/2 p-2">
           <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2 md:text-base">
