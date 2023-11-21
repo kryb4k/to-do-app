@@ -12,6 +12,7 @@ import {
 } from "react-icons/hi2";
 import UpdateForm from "./UpdateForm";
 import Modal from "../utilities/Modal";
+import { format, parseISO } from "date-fns";
 
 const Task = ({ task, onDelete, onUpdate }) => {
   const [isDetailsVisible, setIsDetailsVisible] = useState(false);
@@ -130,9 +131,9 @@ const Task = ({ task, onDelete, onUpdate }) => {
       <div className="flex border-b border-cyan-700 m-3 items-center justify-items-center block">
         <button className="w-1/6 text-center" onClick={handleTaskFinish}>
           {newTask.isDone ? (
-            <HiCheckCircle className="w-6 h-6 text-emerald-600" />
+            <HiCheckCircle className="w-6 h-6 text-emerald-600 hover:text-emerald-400 rounded-full" />
           ) : (
-            <HiOutlineCheckCircle className="w-6 h-6 text-slate-800" />
+            <HiOutlineCheckCircle className="w-6 h-6 text-slate-800 hover:bg-slate-200 rounded-full" />
           )}
         </button>
         <div className="w-full ml-1">
@@ -147,9 +148,9 @@ const Task = ({ task, onDelete, onUpdate }) => {
         <div className="w-1/8">
           <button onClick={toggleDetails}>
             {isDetailsVisible ? (
-              <HiChevronDown className="w-5 h-5" />
+              <HiChevronDown className="w-7 h-7 p-1 rounded-full hover:bg-slate-200" />
             ) : (
-              <HiChevronLeft className="w-5 h-5" />
+              <HiChevronLeft className="w-7 h-7 p-1 rounded-full hover:bg-slate-200" />
             )}
           </button>
         </div>
@@ -174,29 +175,28 @@ const Task = ({ task, onDelete, onUpdate }) => {
                 Priority
                 {priorityLevel(task.priority)}
               </h3>
-              {task.taskDate && (
-                <h3 className="w-1/2 uppercase tracking-wide text-right text-gray-700 font-semibold text-sm mb-2">
-                  date
-                  <span className="font-semibold text-xs ml-2 uppercase">
-                    {task.taskDate}
-                  </span>
-                </h3>
-              )}
+
+              <h3 className="w-1/2 uppercase tracking-wide text-right text-gray-700 font-semibold text-sm mb-2">
+                time
+                <span className="font-semibold text-xs ml-2 uppercase">
+                  {format(parseISO(task.startDateTime), "kk:mm")}
+                </span>
+              </h3>
             </div>
           </div>
           <div className="block text-right">
             <button onClick={handleTaskNotification} className="mr-5">
               {!newTask.notificationsEnabled ? (
-                <HiOutlineBell className="w-6 h-6" />
+                <HiOutlineBell className="w-8 h-8 p-1 hover:bg-slate-200 rounded-full" />
               ) : (
-                <HiBellAlert className="w-6 h-6 text-amber-600" />
+                <HiBellAlert className="w-8 h-8 p-1 text-amber-600  hover:text-amber-500 hover:bg-slate-200 rounded-full" />
               )}
             </button>
             <button onClick={handleDeleteClick} className="mr-5">
-              <HiOutlineTrash className="w-6 h-6" />
+              <HiOutlineTrash className="w-8 h-8 p-1 hover:bg-slate-200 rounded-full" />
             </button>
             <button onClick={openModal}>
-              <HiOutlinePencilSquare className="w-6 h-6" />
+              <HiOutlinePencilSquare className="w-8 h-8 p-1 hover:bg-slate-200 rounded-full" />
             </button>
           </div>
         </div>
@@ -209,6 +209,7 @@ const Task = ({ task, onDelete, onUpdate }) => {
           onCancel={() => {
             closeModal();
           }}
+          className="md:w-100"
         />
       </Modal>
     </div>

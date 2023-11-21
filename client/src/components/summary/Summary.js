@@ -119,17 +119,29 @@ const Summary = () => {
         <div className="flex justify-center m-2">
           <button
             onClick={handleClickToday}
-            className="border rounded-t py-1 px-2 text-cyan-700 font-semibold text-center">
+            className={`border rounded-t py-1 px-2  font-semibold text-center hover:bg-cyan-700 hover:text-white ${
+              chartTitle === "todays"
+                ? "bg-cyan-700 text-white"
+                : "bg-white text-cyan-700"
+            }`}>
             Today
           </button>
           <button
             onClick={handleClickWeekly}
-            className="border rounded-t py-1 px-2 text-cyan-700 font-semibold text-center active:text-red">
+            className={`border rounded-t py-1 px-2  font-semibold text-center hover:bg-cyan-700 hover:text-white ${
+              chartTitle === "weeks"
+                ? "bg-cyan-700 text-white"
+                : "bg-white text-cyan-700"
+            }`}>
             Weekly
           </button>
           <button
             onClick={handleClickMonthly}
-            className="border rounded-t py-1 px-2 text-cyan-700 font-semibold text-center">
+            className={`border rounded-t py-1 px-2  font-semibold text-center hover:bg-cyan-700 hover:text-white ${
+              chartTitle === "months"
+                ? "bg-cyan-700 text-white"
+                : "bg-white text-cyan-700"
+            }`}>
             Monthly
           </button>
         </div>
@@ -137,9 +149,9 @@ const Summary = () => {
           <button
             type="button"
             onClick={() => previous(chartTitle, startTimeRange, endTimeRange)}
-            className="-my-1.5 flex flex-none items-center justify-center p-1.5 text-gray-400 hover:text-gray-500">
+            className="flex flex-none items-center justify-center p-1.5 text-gray-400 hover:text-gray-500 hover:bg-slate-200 rounded-full">
             <span className="sr-only">Previous month</span>
-            <HiChevronLeft className="w-5 h-5" aria-hidden="true" />
+            <HiChevronLeft className="w-5 h-5 " aria-hidden="true" />
           </button>
           <h1>
             {chartTitle === "todays"
@@ -152,7 +164,7 @@ const Summary = () => {
           <button
             onClick={() => next(chartTitle, startTimeRange, endTimeRange)}
             type="button"
-            className="-my-1.5 -mr-1.5 ml-2 flex flex-none items-center justify-center p-1.5 text-gray-400 hover:text-gray-500 ">
+            className="flex flex-none items-center justify-center p-1.5 text-gray-400 hover:text-gray-500 hover:bg-slate-200 rounded-full">
             <span className="sr-only">Next month</span>
             <HiChevronRight className="w-5 h-5" aria-hidden="true" />
           </button>

@@ -51,7 +51,7 @@ const Form = (newDate) => {
 
   return (
     <div className="p-2">
-      <div className="m-3 md:w-100 md:p-3  md:mx-auto">
+      <div className="m-3 w-100 md:p-3 md:mx-auto">
         <FormTitle title="create task" />
         <form
           onSubmit={handleSubmit(onSubmit)}
@@ -79,18 +79,18 @@ const Form = (newDate) => {
               defaultValue={newDate}
               requiredSymbol={true}
             />
+            <NotificationCehckbox
+              label="notificationsEnabled"
+              register={register}
+            />
+            <Email
+              label="email"
+              register={register}
+              error={errors}
+              requiredSymbol={true}
+            />
           </div>
-          <NotificationCehckbox
-            label="notificationsEnabled"
-            register={register}
-          />
-          <Email
-            label="email"
-            register={register}
-            error={errors}
-            requiredSymbol={true}
-          />
-          <button className="w-full bg-transparent py-2 px4 mt-2 border border-cyan-700 rounded text-cyan-900 font-bold text-m uppercase hover:bg-cyan-700 hover:text-white md:text-lg">
+          <button className="w-full bg-transparent py-2 px4 mt-2 border border-cyan-700 rounded text-cyan-900 font-bold text-m uppercase hover:bg-cyan-700 hover:text-white active:bg-cyan-700 active:text-white focus:bg-cyan-700 focus:text-white md:text-lg">
             Add
           </button>
         </form>
