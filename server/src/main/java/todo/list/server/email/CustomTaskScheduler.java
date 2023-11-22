@@ -9,7 +9,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 import todo.list.server.email.config.EmailDetails;
 import todo.list.server.email.service.EmailService;
-import todo.list.server.task.Task;
+import todo.list.server.Task;
 import todo.list.server.task.TaskRepository;
 
 import java.time.*;
@@ -93,7 +93,7 @@ public class CustomTaskScheduler {
     }
 
 //    @Scheduled(fixedDelay = 10000)
-    @Scheduled(cron = "0 60 * * * *", zone = "Europe/Warsaw")
+    @Scheduled(cron = "0 0/5 * * * *", zone = "Europe/Warsaw")
     public void sendTaskCompletionNotification() {
         LocalDateTime currentDateTime = LocalDateTime.now();
         LocalDateTime oneHourFromNow = currentDateTime.plusHours(1);

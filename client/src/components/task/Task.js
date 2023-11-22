@@ -179,7 +179,8 @@ const Task = ({ task, onDelete, onUpdate }) => {
               <h3 className="w-1/2 uppercase tracking-wide text-right text-gray-700 font-semibold text-sm mb-2">
                 time
                 <span className="font-semibold text-xs ml-2 uppercase">
-                  {format(parseISO(task.startDateTime), "kk:mm")}
+                  {`${format(parseISO(task.startDateTime), "kk:mm")} -
+                    ${format(parseISO(task.endDateTime), "kk:mm")}`}
                 </span>
               </h3>
             </div>

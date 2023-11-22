@@ -1,4 +1,4 @@
-package todo.list.server.task;
+package todo.list.server;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -11,32 +11,36 @@ import java.time.Instant;
 @Entity
 @ToString
 @Table(name="tasks")
+@Getter @Setter
 public class Task {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Getter @Setter private Long id;
+    private Long id;
 
     @Column(name = "taskTitle")
-    @Getter @Setter private String taskTitle;
+    private String taskTitle;
 
     @Column(name = "taskDescription")
-    @Getter @Setter private String taskDescription;
+    private String taskDescription;
 
     @Column(name = "startDateTime")
-    @Getter @Setter private Instant startDateTime;
+    private Instant startDateTime;
+
+    @Column(name="endDateTime")
+    private Instant endDateTime;
 
     @Column(name="priority")
-    @Getter @Setter private Integer priority;
+    private Integer priority;
 
     @Column(name="isDone")
-    @Getter @Setter private Boolean isDone;
+    private Boolean isDone;
 
     @Column(name="notificationsEnabled")
-    @Getter @Setter private Boolean notificationsEnabled;
+    private Boolean notificationsEnabled;
 
     @Column(name="email")
-    @Getter @Setter private String email;
+    private String email;
 
 }
 

@@ -15,6 +15,7 @@ import {
   subDays,
   subWeeks,
   subMonths,
+  subMinutes,
 } from "date-fns";
 import { getAllTasksByMonth } from "../../api/getAllTasksByMonth.js";
 import { toast } from "react-toastify";
@@ -31,10 +32,9 @@ const Summary = () => {
     format(startOfDay(today), "yyyy-MM-dd'T'HH:mm:ss'Z'")
   );
   const [endTimeRange, setEndTimeRange] = useState(
-    format(endOfDay(today), "yyyy-MM-dd'T'HH:mm:ss'Z'")
+    format(subMinutes(endOfDay(today), 1), "yyyy-MM-dd'T'HH:mm:ss'Z'")
   );
   const [chartTitle, setChartTitle] = useState("todays");
-
   const handleClickToday = () => {
     setStartTimeRange(format(startOfDay(today), "yyyy-MM-dd'T'HH:mm:ss'Z'"));
     setEndTimeRange(format(endOfDay(today), "yyyy-MM-dd'T'HH:mm:ss'Z'"));
@@ -68,7 +68,7 @@ const Summary = () => {
     fetchData();
   }, [startTimeRange, endTimeRange, dispatch]);
 
-  const next = (chartName, startDate, endDate) => {
+  const next = (chartName, startDate) => {
     let newStartDate, newEndDate;
 
     switch (chartName) {
@@ -91,7 +91,7 @@ const Summary = () => {
     setEndTimeRange(format(newEndDate, "yyyy-MM-dd'T'HH:mm:ss'Z'"));
   };
 
-  const previous = (chartName, startDate, endDate) => {
+  const previous = (chartName, startDate) => {
     let newStartDate, newEndDate;
 
     switch (chartName) {

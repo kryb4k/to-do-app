@@ -73,7 +73,15 @@ const Form = (newDate) => {
             <Select label="priority" register={register} />
             <DateInput
               label="startDateTime"
-              labelText="date"
+              labelText="start time"
+              register={register}
+              error={errors}
+              defaultValue={newDate}
+              requiredSymbol={true}
+            />
+            <DateInput
+              label="endDateTime"
+              labelText="end time"
               register={register}
               error={errors}
               defaultValue={newDate}
