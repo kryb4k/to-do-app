@@ -144,7 +144,6 @@ const Task = ({ task, onDelete, onUpdate }) => {
             {task.taskTitle}
           </h1>
         </div>
-        {/* //ogarnac ikony */}
         <div className="w-1/8">
           <button onClick={toggleDetails}>
             {isDetailsVisible ? (
@@ -176,11 +175,11 @@ const Task = ({ task, onDelete, onUpdate }) => {
                 {priorityLevel(task.priority)}
               </h3>
 
-              <h3 className="w-1/2 uppercase tracking-wide text-right text-gray-700 font-semibold text-sm mb-2">
-                time
-                <span className="font-semibold text-xs ml-2 uppercase">
-                  {`${format(parseISO(task.startDateTime), "kk:mm")} -
-                    ${format(parseISO(task.endDateTime), "kk:mm")}`}
+              <h3 className="w-1/2 uppercase tracking-wide text-right text-slate-700 font-semibold text-sm mb-2">
+                {`${format(parseISO(task.startDateTime), "dd.MM.yyy")}`}
+                <span className="font-semibold text-xs ml-2 uppercase text-red-800">
+                  {`${format(parseISO(task.startDateTime), "k:mm")} -
+                    ${format(parseISO(task.endDateTime), "k:mm")}`}
                 </span>
               </h3>
             </div>

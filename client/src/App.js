@@ -8,6 +8,7 @@ import { ToastContainer, Slide } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import TaskList from "./components/taskList/TaskList";
 import Summary from "./components/summary/Summary.js";
+import SummaryMobile from "./components/summary/SummaryMobile.js";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <Route path="/add-form" element={<Form />} />
           <Route path="/task-list" element={<TaskList />} />
           <Route path="/summary" element={<Summary />} />
+          <Route path="/summary-mobile" element={<SummaryMobile />} />
           <Route path="/download" />
         </Routes>
       </TodoProvider>

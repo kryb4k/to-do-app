@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useTodoContext } from "../../hooks/TodoContext.js";
 import Task from "../task/Task.js";
-import { getAllTasks } from "../../api/getAllTasks.js";
 import { toast } from "react-toastify";
 import { deleteTask } from "../../api/deleteTask";
 import { parseISO, compareAsc, compareDesc } from "date-fns";
 import { updateTaskContent } from "../../api/updateTaskContent";
+import { getAllTasks } from "../../api/getAllTasks.js";
 
 const TaskList = () => {
   const { state, dispatch } = useTodoContext();
@@ -13,19 +13,22 @@ const TaskList = () => {
   const [filterIsDone, setFilterIsDone] = useState(null);
   const [isAscending, setIsAscending] = useState(true);
 
+  const [isEmpty, setIsEmpty] = useState(!state.tasks.length);
+
   useEffect(() => {
     async function fetchData() {
-      try {
-        const data = await getAllTasks();
-        dispatch({ type: "SET_TASKS", payload: data });
-      } catch (error) {
-        console.error("Error fetching data:", error);
-        toast.error("Unable to fetch tasks. Please try again.");
+      if (window.screen.width < 768) {
+        try {
+          const data = await getAllTasks();
+          dispatch({ type: "SET_TASKS", payload: data });
+        } catch (error) {
+          console.error("Error fetching data:", error);
+          toast.error("Unable to fetch tasks. Please try again.");
+        }
       }
     }
-
     fetchData();
-  }, [dispatch]);
+  }, [isEmpty]);
 
   const handleTaskDelete = async (taskId) => {
     try {
@@ -76,8 +79,7 @@ const TaskList = () => {
   };
 
   const clearFilters = () => {
-    setFilterPriority(null);
-    setFilterIsDone(null);
+    setIsEmpty(true);
   };
 
   const sortedTasks = state.tasks.slice().sort((a, b) => {
@@ -133,16 +135,24 @@ const TaskList = () => {
           </select>
         </div>
       </div>
-      <div className="mb-4 m-2 flex justify-between">
+      <div className="mb-4 m-2 flex justify-end gap-3">
         <button
           onClick={toggleSortOrder}
-          className="border rounded-t py-1 px-2 text-cyan-700 font-semibold text-center hover:bg-cyan-700 hover:text-white">
-          {isAscending ? "Sort dates descending" : "Sort dates ascending"}
+          className="border rounded-t py-1 px-2 text-cyan-700 font-semibold text-center hover:bg-cyan-700 hover:text-white uppercase">
+          {isAscending ? "newest" : "oldest"}
         </button>
         <button
           onClick={clearFilters}
-          className="border rounded-t py-1 px-2 text-cyan-700 font-semibold text-center hover:bg-cyan-700 hover:text-white">
-          Clear Filters
+          className="border rounded-t py-1 px-2 text-cyan-700 font-semibold text-center hover:bg-cyan-700 hover:text-white uppercase md:hidden">
+          All tasks
+        </button>
+        <button
+          onClick={() => {
+            setFilterPriority(null);
+            setFilterIsDone(null);
+          }}
+          className="border rounded-t py-1 px-2 text-cyan-700 font-semibold text-center hover:bg-cyan-700 hover:text-white uppercase hidden md:inline">
+          clear filters
         </button>
       </div>
       {filteredTasks.map((task) => (
