@@ -8,6 +8,8 @@ const UpdateForm = ({ task, onUpdate, onCancel }) => {
     control,
     formState: { errors },
     register,
+    setValue,
+    watch,
   } = useForm({
     defaultValues: {
       ...task,
@@ -135,7 +137,7 @@ const UpdateForm = ({ task, onUpdate, onCancel }) => {
             className={`block uppercase tracking-wide ${
               errors.startDateTime ? "text-red-700" : "text-gray-700"
             } text-xs font-bold mb-2 md:text-base`}>
-            Task Date <span className="text-red-700">*</span>
+            Task Dates <span className="text-red-700">*</span>
           </label>
           <Controller
             name="startDateTime"
@@ -149,6 +151,16 @@ const UpdateForm = ({ task, onUpdate, onCancel }) => {
                 {...register("startDateTime", {
                   required: "This field is required",
                 })}
+                onChange={(e) => {
+                  field.onChange(e.target.value);
+                  const datePart = e.target.value.split("T")[0];
+                  const minTime = "T00:00";
+                  const maxTime = "T23:59";
+                  setValue("endDateTime", `${datePart}${minTime}`);
+                  document.getElementById(
+                    "endDateTime"
+                  ).max = `${datePart}${maxTime}`;
+                }}
               />
             )}
           />
@@ -157,15 +169,6 @@ const UpdateForm = ({ task, onUpdate, onCancel }) => {
               {errors.startDateTime.message}
             </p>
           )}
-        </div>
-        <div className="mb-4 w-full block border-b border-cyan-700">
-          <label
-            htmlFor="newTaskEndDate"
-            className={`block uppercase tracking-wide ${
-              errors.endDateTime ? "text-red-700" : "text-gray-700"
-            } text-xs font-bold mb-2 md:text-base`}>
-            Task Date <span className="text-red-700">*</span>
-          </label>
           <Controller
             name="endDateTime"
             control={control}
@@ -178,6 +181,7 @@ const UpdateForm = ({ task, onUpdate, onCancel }) => {
                 {...register("endDateTime", {
                   required: "This field is required",
                 })}
+                min={watch("startDateTime")}
               />
             )}
           />
