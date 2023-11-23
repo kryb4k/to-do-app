@@ -6,7 +6,7 @@ const Modal = ({ isOpen, onClose, children }) => {
           <div
             className="fixed inset-0 bg-gray-800 opacity-50"
             onClick={onClose}></div>
-          <div className="bg-white w-3/4 md:w-2/5 rounded-lg z-50">
+          <div className="bg-white w-3/4 md:w-7/12 rounded-lg z-50">
             {children}
           </div>
         </div>

@@ -53,7 +53,7 @@ const Form = (newDate) => {
 
   return (
     <div className="p-2">
-      <div className="m-3 w-100 md:p-3 md:mx-auto">
+      <div className="m-3 w-100 md:p-5 md:mx-auto">
         <FormTitle title="create task" />
         <form
           onSubmit={handleSubmit(onSubmit)}
