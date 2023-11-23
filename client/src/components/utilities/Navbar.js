@@ -3,10 +3,10 @@ import {
   HiMiniCalendarDays,
   HiChartPie,
   HiListBullet,
-  HiArrowDownCircle,
   HiMiniPlusCircle,
 } from "react-icons/hi2";
 import { Link, useLocation } from "react-router-dom";
+import ICSFile from "./ICSFile.js";
 
 const Navbar = () => {
   const location = useLocation();
@@ -54,11 +54,7 @@ const Navbar = () => {
           </Link>
         </li>
         <li className="mr-1">
-          <Link
-            to="/"
-            className={`inline-block border-l border-t border-r rounded-t py-2 px-4 text-slate-600 font-semibold text-slate-600 text-center md:hover:bg-cyan-900 md:hover:text-white`}>
-            <HiArrowDownCircle className="w-5 h-5 md:w-6 md:h-6" />
-          </Link>
+          <ICSFile />
         </li>
       </ul>
     </div>

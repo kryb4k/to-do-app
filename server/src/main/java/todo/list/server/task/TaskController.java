@@ -1,14 +1,9 @@
 package todo.list.server.task;
 
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.*;
-
-
-import java.time.ZoneId;
+import todo.list.server.Task;
 import java.util.List;
 import java.time.Instant;
-import java.util.Date;
 
 @CrossOrigin("http://localhost:3000/")
 @RestController
@@ -41,6 +36,7 @@ public class TaskController {
         existingTask.setTaskTitle(task.getTaskTitle());
         existingTask.setTaskDescription(task.getTaskDescription());
         existingTask.setStartDateTime(task.getStartDateTime());
+        existingTask.setEndDateTime(task.getEndDateTime());
         existingTask.setPriority(task.getPriority());
         existingTask.setIsDone(task.getIsDone());
         existingTask.setNotificationsEnabled(task.getNotificationsEnabled());
@@ -63,6 +59,10 @@ public class TaskController {
         return taskRepository.findByStartDateTimeBetween(startDate, endDate);
     }
 
+//    @GetMapping("/generate-ics")
+//    public ResponseEntity<String> generateIcsFileForMonth() {
+//
+//    }
 
 }
 

@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import Input from "./Input";
 import Select from "./Select";
-import DateInput from "./DateInput";
+import DateInputs from "./DateInputs.js";
 import DescriptionInput from "./DescriptionInput";
 import FormTitle from "./FormTitle";
 import { useTodoContext } from "../../hooks/TodoContext.js";
@@ -15,6 +15,8 @@ const Form = (newDate) => {
     register,
     handleSubmit,
     formState: { errors },
+    setValue,
+    watch,
   } = useForm();
 
   const { dispatch } = useTodoContext();
@@ -51,7 +53,7 @@ const Form = (newDate) => {
 
   return (
     <div className="p-2">
-      <div className="m-3 w-100 md:p-3 md:mx-auto">
+      <div className="m-3 w-100 md:p-5 md:mx-auto">
         <FormTitle title="create task" />
         <form
           onSubmit={handleSubmit(onSubmit)}
@@ -71,13 +73,15 @@ const Form = (newDate) => {
           />
           <div className="w-full block items-center">
             <Select label="priority" register={register} />
-            <DateInput
+            <DateInputs
               label="startDateTime"
-              labelText="date"
+              label2="endDateTime"
               register={register}
               error={errors}
               defaultValue={newDate}
               requiredSymbol={true}
+              setValue={setValue}
+              watch={watch}
             />
             <NotificationCehckbox
               label="notificationsEnabled"

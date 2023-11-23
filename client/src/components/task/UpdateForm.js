@@ -8,6 +8,8 @@ const UpdateForm = ({ task, onUpdate, onCancel }) => {
     control,
     formState: { errors },
     register,
+    setValue,
+    watch,
   } = useForm({
     defaultValues: {
       ...task,
@@ -15,6 +17,7 @@ const UpdateForm = ({ task, onUpdate, onCancel }) => {
         parseISO(task.startDateTime),
         "yyyy-MM-dd'T'HH:mm:ss"
       ),
+      endDateTime: format(parseISO(task.endDateTime), "yyyy-MM-dd'T'HH:mm:ss"),
     },
   });
   console.log();
@@ -22,6 +25,9 @@ const UpdateForm = ({ task, onUpdate, onCancel }) => {
   const onSubmit = (data) => {
     data.startDateTime = new Date(data.startDateTime);
     data.startDateTime = format(data.startDateTime, "yyyy-MM-dd'T'HH:mm:ssXXX");
+
+    data.endDateTime = new Date(data.endDateTime);
+    data.endDateTime = format(data.endDateTime, "yyyy-MM-dd'T'HH:mm:ssXXX");
     data.priority = parseInt(data.priority);
 
     const updatedTask = { ...task, ...data };
@@ -127,11 +133,11 @@ const UpdateForm = ({ task, onUpdate, onCancel }) => {
         </div>
         <div className="mb-4 w-full block border-b border-cyan-700">
           <label
-            htmlFor="newTaskDate"
+            htmlFor="newTaskStartDate"
             className={`block uppercase tracking-wide ${
               errors.startDateTime ? "text-red-700" : "text-gray-700"
             } text-xs font-bold mb-2 md:text-base`}>
-            Task Date <span className="text-red-700">*</span>
+            Task Dates <span className="text-red-700">*</span>
           </label>
           <Controller
             name="startDateTime"
@@ -145,12 +151,43 @@ const UpdateForm = ({ task, onUpdate, onCancel }) => {
                 {...register("startDateTime", {
                   required: "This field is required",
                 })}
+                onChange={(e) => {
+                  field.onChange(e.target.value);
+                  const datePart = e.target.value.split("T")[0];
+                  const minTime = "T00:00";
+                  const maxTime = "T23:59";
+                  setValue("endDateTime", `${datePart}${minTime}`);
+                  document.getElementById(
+                    "endDateTime"
+                  ).max = `${datePart}${maxTime}`;
+                }}
               />
             )}
           />
           {errors.startDateTime && (
             <p className="text-sm text-red-700 mt-1">
               {errors.startDateTime.message}
+            </p>
+          )}
+          <Controller
+            name="endDateTime"
+            control={control}
+            render={({ field }) => (
+              <input
+                {...field}
+                type="datetime-local"
+                id="endDateTime"
+                className="w-full border-none rounded hover:bg-slate-100"
+                {...register("endDateTime", {
+                  required: "This field is required",
+                })}
+                min={watch("startDateTime")}
+              />
+            )}
+          />
+          {errors.endDateTime && (
+            <p className="text-sm text-red-700 mt-1">
+              {errors.endDateTime.message}
             </p>
           )}
         </div>
