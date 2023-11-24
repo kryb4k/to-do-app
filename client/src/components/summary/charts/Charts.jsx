@@ -19,9 +19,9 @@ import {
 } from "date-fns";
 import { getAllTasksByMonth } from "../../../api/getAllTasksByMonth.js";
 import { toast } from "react-toastify";
-import { useTodoContext } from "../../../hooks/TodoContext.js";
-import PieChartComponent from "./PieChartComponent.js";
-import BarChartComponent from "./BarChartComponent.js";
+import { useTodoContext } from "../../../hooks/TodoContext";
+import PieChartComponent from "./PieChartComponent";
+import BarChartComponent from "./BarChartComponent";
 import { HiChevronLeft, HiChevronRight } from "react-icons/hi2";
 
 const Charts = () => {
@@ -40,9 +40,7 @@ const Charts = () => {
     setChartTitle("daily");
   };
   const handleClickWeekly = () => {
-    setStartTimeRange(
-      format(startOfWeek(addDays(today, 2)), "yyyy-MM-dd'T'HH:mm:ss'Z'")
-    );
+    setStartTimeRange(format(startOfWeek(today), "yyyy-MM-dd'T'HH:mm:ss'Z'"));
     setEndTimeRange(format(endOfWeek(today), "yyyy-MM-dd'T'HH:mm:ss'Z'"));
     setChartTitle("weeks");
   };

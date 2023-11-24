@@ -11,7 +11,7 @@ import {
   HiBellAlert,
 } from "react-icons/hi2";
 import UpdateForm from "./UpdateForm";
-import Modal from "../utilities/Modal";
+import Modal from "../common/Modal";
 import { format, parseISO } from "date-fns";
 
 const Task = ({ task, onDelete, onUpdate }) => {

@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { useTodoContext } from "../../hooks/TodoContext.js";
-import Task from "../task/Task.js";
+import { useTodoContext } from "../../hooks/TodoContext";
+import Task from "../task/Task";
 import { toast } from "react-toastify";
-import { deleteTask } from "../../api/deleteTask";
+import { deleteTask } from "../../api/deleteTask.js";
 import { parseISO, compareAsc, compareDesc } from "date-fns";
-import { updateTaskContent } from "../../api/updateTaskContent";
+import { updateTaskContent } from "../../api/updateTaskContent.js";
 import { getAllTasks } from "../../api/getAllTasks.js";
 
 const TaskList = () => {
@@ -28,7 +28,7 @@ const TaskList = () => {
       }
     }
     fetchData();
-  }, [isEmpty]);
+  }, [isEmpty, dispatch]);
 
   const handleTaskDelete = async (taskId) => {
     try {

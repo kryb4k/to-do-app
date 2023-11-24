@@ -4,7 +4,7 @@ import {
   HiChevronRight,
   HiMiniPlusCircle,
 } from "react-icons/hi2";
-import { useTodoContext } from "../../hooks/TodoContext.js";
+import { useTodoContext } from "../../hooks/TodoContext";
 import {
   format,
   getDay,
@@ -24,11 +24,11 @@ import {
   compareAsc,
 } from "date-fns";
 import { getAllTasksByMonth } from "../../api/getAllTasksByMonth.js";
-import Task from "../task/Task.js";
+import Task from "../task/Task";
 import { toast } from "react-toastify";
 import { deleteTask } from "../../api/deleteTask.js";
 import { updateTaskContent } from "../../api/updateTaskContent.js";
-import Modal from "../utilities/Modal";
+import Modal from "../common/Modal";
 import Form from "../form/Form";
 
 const CalendarGrid = () => {
@@ -154,7 +154,7 @@ const CalendarGrid = () => {
   };
 
   return (
-    <div>
+    <div className="m-3 h-full">
       <div className="md:inline-flex md:justify-center md:w-full md:h-screen md:gap-4 md:p-2">
         <div className="md:flex-col md:w-1/2 md:border-r md:border-grey-700 pr-3">
           <div className="flex items-center">

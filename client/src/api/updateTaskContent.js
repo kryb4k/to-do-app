@@ -1,4 +1,4 @@
-import { API_URL } from "../common/config";
+import { API_URL } from "../config/config";
 
 export const updateTaskContent = async (updatedTask, dispatch) => {
   try {

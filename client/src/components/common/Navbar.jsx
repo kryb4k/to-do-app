@@ -6,7 +6,7 @@ import {
   HiMiniPlusCircle,
 } from "react-icons/hi2";
 import { Link, useLocation } from "react-router-dom";
-import ICSFile from "./ICSFile.js";
+import ICSFile from "./ICSFile.jsx";
 
 const Navbar = () => {
   const location = useLocation();

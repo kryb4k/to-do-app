@@ -1,14 +1,14 @@
 import "./App.css";
-import Calendar from "./components/calendar/Calendar";
+import CalendarGrid from "./components/calendar/CalendarGrid";
 import Form from "./components/form/Form";
-import Navbar from "./components/utilities/Navbar.js";
-import { TodoProvider } from "./hooks/TodoContext.js";
+import Navbar from "./components/common/Navbar";
+import { TodoProvider } from "./hooks/TodoContext";
 import { Routes, Route } from "react-router-dom";
 import { ToastContainer, Slide } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import TaskList from "./components/taskList/TaskList";
-import Summary from "./components/summary/Summary.js";
-import SummaryMobile from "./components/summary/SummaryMobile.js";
+import Summary from "./components/summary/Summary";
+import SummaryMobile from "./components/summary/SummaryMobile";
 
 function App() {
   return (
@@ -17,7 +17,7 @@ function App() {
         <Navbar />
         <ToastContainer transition={Slide} />
         <Routes>
-          <Route path="/" element={<Calendar />} />
+          <Route path="/" element={<CalendarGrid />} />
           <Route path="/add-form" element={<Form />} />
           <Route path="/task-list" element={<TaskList />} />
           <Route path="/summary" element={<Summary />} />

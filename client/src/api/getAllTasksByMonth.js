@@ -1,4 +1,4 @@
-import { API_URL } from "../common/config";
+import { API_URL } from "../config/config";
 
 export async function getAllTasksByMonth(startDate, endDate) {
   const response = await fetch(
