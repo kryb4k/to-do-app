@@ -1,20 +1,5 @@
-version: '1.0'
+version: "1.1"
 services:
-  # server:
-  #   container_name: java
-  #   image: {image_path}
-  #   restart: always
-  #   ports:
-  #     - 8080:8080
-  #   build:
-  #     context: .
-  #   depends_on:
-  #     - db
-  #   environment:
-  #     - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/compose-postgres
-  #     - SPRING_DATASOURCE_USERNAME=compose-postgres
-  #     - SPRING_DATASOURCE_PASSWORD=compose-postgres
-  #     - SPRING_JPA_HIBERNATE_DDL_AUTO=update - idk czy mi to potrzebne
   db:
     container_name: postgresql_db
     image: postgres
@@ -27,5 +12,23 @@ services:
       POSTGRES_DB: example
     volumes:
       - pgdata:/var/lib/postgresql
+  todo-app-server:
+    container_name: todo-app-server
+    image: "kryb4k/todo-app-server:latest"
+    ports:
+      - 8080:8080
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/example
+      - SPRING_DATASOURCE_USERNAME=example
+      - SPRING_DATASOURCE_PASSWORD=example
+    depends_on:
+      - db
+  react_client:
+    container_name: react_client
+    image: "kryb4k/react-client:latest"
+    ports:
+      - 3000:3000
+    links:
+      - todo-app-server
 volumes:
   pgdata: {}

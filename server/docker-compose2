@@ -1,0 +1,40 @@
+version: "1.1"
+services:
+  todo-app-server:
+    container_name: todo-app-server
+    image: "todo-app-server"
+    restart: always
+    ports:
+      - 8080:8080
+    build:
+      context: .
+    depends_on:
+      - db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://localhost:5432/example
+      - SPRING_DATASOURCE_USERNAME=example
+      - SPRING_DATASOURCE_PASSWORD=example
+  db:
+    container_name: postgresql_db
+    image: postgres
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: example
+      POSTGRES_PASSWORD: example
+      POSTGRES_DB: example
+    volumes:
+      - pgdata:/var/lib/postgresql
+  client:
+  container_name: react_client
+  image: "react-client"
+  restart: always
+  ports:
+    - 3000:3000
+  links:
+    - todo-app-server
+  depends_on:
+    - todo-app-server
+volumes:
+  pgdata: {}
