@@ -1,13 +1,13 @@
 import { useForm } from "react-hook-form";
 import Input from "./Input";
 import Select from "./Select";
-import DateInputs from "./DateInputs.js";
+import DateInputs from "./DateInputs";
 import DescriptionInput from "./DescriptionInput";
 import FormTitle from "./FormTitle";
-import { useTodoContext } from "../../hooks/TodoContext.js";
+import { useTodoContext } from "../../hooks/TodoContext";
 import { createTask } from "../../api/createTask";
 import { toast } from "react-toastify";
-import NotificationCehckbox from "./NotificationCheckbox.js";
+import NotificationCehckbox from "./NotificationCheckbox";
 import Email from "./Email";
 
 const Form = (newDate) => {
@@ -24,7 +24,6 @@ const Form = (newDate) => {
   const onSubmit = async (data, event) => {
     event.target.reset();
     try {
-      console.log("task created");
       await createTask(data, dispatch);
       toast.success("Task created successfully", {
         position: "top-center",
@@ -37,7 +36,6 @@ const Form = (newDate) => {
         theme: "colored",
       });
     } catch (error) {
-      console.error("Error creating task:", error.message);
       toast.error(error.message, {
         position: "top-center",
         autoClose: 3000,

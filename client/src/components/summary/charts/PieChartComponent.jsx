@@ -7,7 +7,7 @@ import {
   Label,
   Legend,
 } from "recharts";
-import { useTodoContext } from "../../../hooks/TodoContext.js";
+import { useTodoContext } from "../../../hooks/TodoContext";
 
 const PieChartComponent = ({ chartTitle }) => {
   const { state } = useTodoContext();

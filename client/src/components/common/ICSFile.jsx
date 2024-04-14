@@ -9,7 +9,7 @@ import {
   getMinutes,
   parseISO,
 } from "date-fns";
-import { useTodoContext } from "../../hooks/TodoContext.js";
+import { useTodoContext } from "../../hooks/TodoContext";
 
 const ICSFile = () => {
   const { state } = useTodoContext();
